@@ -1,12 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.MealPlanPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Meal Plan">
 
-namespace FitLife.Views
-{
-class MealPlanPage
-{
-}
-}
+    <ScrollView>
+        <VerticalStackLayout Spacing="12">
+            <Label Text="Today’s Meals" Style="{StaticResource H1}" />
+
+            <Frame Style="{StaticResource Card}">
+                <VerticalStackLayout>
+                    <Label Text="Total Calories" Style="{StaticResource Body}" />
+                    <Label Text="{Binding TotalCalories}" FontSize="24" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Breakfast" Style="{StaticResource H2}" />
+            <CollectionView ItemsSource="{Binding Breakfast}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="70,*" Padding="8" ColumnSpacing="10">
+                            <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" Style="{StaticResource Body}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Lunch" Style="{StaticResource H2}" />
+            <CollectionView ItemsSource="{Binding Lunch}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="70,*" Padding="8" ColumnSpacing="10">
+                            <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" Style="{StaticResource Body}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Dinner" Style="{StaticResource H2}" />
+            <CollectionView ItemsSource="{Binding Dinner}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="70,*" Padding="8" ColumnSpacing="10">
+                            <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" Style="{StaticResource Body}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Snack" Style="{StaticResource H2}" />
+            <CollectionView ItemsSource="{Binding Snack}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="70,*" Padding="8" ColumnSpacing="10">
+                            <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" Style="{StaticResource Body}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Add Meal" Command="{Binding AddMealCmd}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

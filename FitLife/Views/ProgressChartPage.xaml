@@ -1,12 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.ProgressChartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Progress">
 
-namespace FitLife.Views
-{
-class ProgressChartPage
-{
-}
-}
+    <VerticalStackLayout Spacing="12">
+        <Label Text="Weekly Activity" Style="{StaticResource H1}" />
+
+        <Frame Style="{StaticResource Card}">
+            <VerticalStackLayout>
+                <Label Text="Weekly Minutes vs Goal" Style="{StaticResource Body}"/>
+                <ProgressBar Progress="{Binding ProgressRatio}" HeightRequest="12"/>
+                <Label Text="{Binding MinutesSum, StringFormat='Done: {0} min'}"/>
+                <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Frame Style="{StaticResource Card}">
+            <Grid HeightRequest="240" ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,*">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[0].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[0].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[1].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[1].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[2].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[2].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[3].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[3].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[4].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[4].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[5].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[5].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center">
+                    <BoxView HeightRequest="{Binding Weekly[6].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
+                    <Label Text="{Binding Weekly[6].Day}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,14 +1,56 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:FitLife"
-             x:Class="FitLife.App">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="FitLife.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:FitLife.Converters">
+
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <!-- Colors -->
+        <Color x:Key="PrimaryColor">#2F80ED</Color>
+        <Color x:Key="AccentColor">#27AE60</Color>
+        <Color x:Key="CardBg">#FFFFFF</Color>
+        <Color x:Key="SoftBg">#F5F7FB</Color>
+        <Color x:Key="TextDark">#1B1F24</Color>
+        <Color x:Key="TextLight">#6B7280</Color>
+
+        <!-- Styles -->
+        <Style TargetType="ContentPage">
+            <Setter Property="BackgroundColor" Value="{StaticResource SoftBg}" />
+            <Setter Property="Padding" Value="16,12"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="H1">
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style TargetType="Label" x:Key="H2">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style TargetType="Label" x:Key="Body">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource TextLight}" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="Padding" Value="14,10"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="Card">
+            <Setter Property="BackgroundColor" Value="{StaticResource CardBg}"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <!-- Converters -->
+        <converters:ProgressConverter x:Key="ProgressConv" />
     </Application.Resources>
 </Application>

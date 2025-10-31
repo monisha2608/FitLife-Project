@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.WorkoutListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Workouts">
 
-namespace FitLife.Views
-{
-class WorkoutListPage
-{
-}
-}
+    <VerticalStackLayout Spacing="8">
+        <SearchBar Placeholder="Search workouts..." />
+        <CollectionView ItemsSource="{Binding Workouts}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource Card}">
+                        <Grid ColumnDefinitions="80,*" ColumnSpacing="12">
+                            <Image Source="{Binding Image}" WidthRequest="72" HeightRequest="72" Aspect="AspectFill"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                <Label Text="{Binding Category}" Style="{StaticResource Body}" />
+                                <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}" />
+                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Add Workout" Command="{Binding AddWorkoutCmd}" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace FitLife.Models;
 
-namespace FitLife.Models
+public class ProgressEntry
 {
-    internal class ProgressEntry
-    {
-    }
+    public string Day { get; set; } = "";
+    public double Minutes { get; set; }
+    public double GoalMinutes { get; set; } = 30;
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FitLife.ViewModels;
 
-namespace FitLife.Views
+namespace FitLife.Views;
+
+public partial class WorkoutListPage : ContentPage
 {
-    internal class WorkoutListPage
+    public WorkoutListPage()
     {
+        InitializeComponent();
+        BindingContext = new WorkoutsViewModel();
     }
 }

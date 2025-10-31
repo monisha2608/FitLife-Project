@@ -1,12 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Dashboard">
 
-namespace FitLife.Views
-{
-class DashboardPage
-{
-}
-}
+    <ScrollView>
+        <VerticalStackLayout Spacing="12">
+
+            <Label Text="FitLife" Style="{StaticResource H1}" />
+
+            <Frame Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Quick Stats" Style="{StaticResource H2}" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                        <VerticalStackLayout>
+                            <Label Text="Calories today" Style="{StaticResource Body}" />
+                            <Label Text="{Binding TotalCaloriesToday}" FontSize="22" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Minutes this week" Style="{StaticResource Body}" />
+                            <Label Text="{Binding MinutesThisWeek}" FontSize="22" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Today’s Workouts" Style="{StaticResource H2}" />
+
+            <CollectionView ItemsSource="{Binding TodayWorkouts}"
+                            ItemsLayout="HorizontalList"
+                            HeightRequest="160">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Style="{StaticResource Card}" WidthRequest="220" Padding="12">
+                            <Grid ColumnDefinitions="80,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12">
+                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
+                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" />
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Category}" Style="{StaticResource Body}" />
+                                <Label Grid.Column="1" Grid.Row="2" Text="{Binding DurationMins, StringFormat='{}{0} min'}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Text="Workouts"   Command="{Binding NavigateWorkoutsCmd}" />
+                <Button Text="Meals"      Grid.Column="1" Command="{Binding NavigateMealsCmd}" />
+            </Grid>
+
+            <Button Text="See Progress" Command="{Binding SeeProgressCmd}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

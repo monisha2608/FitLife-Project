@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace FitLife.Models;
 
-namespace FitLife.Models
+public class Meal
 {
-    internal class Meal
-    {
-    }
+    public string Name { get; set; } = "";
+    public string Type { get; set; } = "";
+    public int Calories { get; set; }
+    public string Image { get; set; } = "";
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FitLife.ViewModels;
 
-namespace FitLife.Views
+namespace FitLife.Views;
+
+public partial class ProgressChartPage : ContentPage
 {
-    internal class ProgressChartPage
+    public ProgressChartPage()
     {
+        InitializeComponent();
+        BindingContext = new ProgressViewModel();
     }
 }
