@@ -2,11 +2,11 @@
 <Application
     x:Class="FitLife.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converters="clr-namespace:FitLife.Converters">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Application.Resources>
-        <!-- Colors -->
+
+        <!-- Base Color Palette (keep these keys) -->
         <Color x:Key="PrimaryColor">#2F80ED</Color>
         <Color x:Key="AccentColor">#27AE60</Color>
         <Color x:Key="CardBg">#FFFFFF</Color>
@@ -14,43 +14,93 @@
         <Color x:Key="TextDark">#1B1F24</Color>
         <Color x:Key="TextLight">#6B7280</Color>
 
-        <!-- Styles -->
+        <!-- Extras -->
+        <Color x:Key="BorderColor">#E5E7EB</Color>
+        <Color x:Key="CardBgDark">#111827</Color>
+        <Color x:Key="BgDark">#0A1128</Color>
+        <Color x:Key="AccentSoft">#DCFCE7</Color>
+        <Color x:Key="WarnColor">#F59E0B</Color>
+        <Color x:Key="DangerColor">#EF4444</Color>
+
+        <!-- Page defaults -->
         <Style TargetType="ContentPage">
             <Setter Property="BackgroundColor" Value="{StaticResource SoftBg}" />
-            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="Padding" Value="18,16" />
         </Style>
 
-        <Style TargetType="Label" x:Key="H1">
-            <Setter Property="FontSize" Value="28" />
-            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <!-- Typography -->
+        <Style x:Key="H1" TargetType="Label">
+            <Setter Property="FontSize" Value="26" />
             <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
         </Style>
-        <Style TargetType="Label" x:Key="H2">
+
+        <Style x:Key="H2" TargetType="Label">
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
             <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
         </Style>
-        <Style TargetType="Label" x:Key="Body">
+
+        <Style x:Key="Body" TargetType="Label">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextColor" Value="{StaticResource TextLight}" />
         </Style>
 
-        <Style TargetType="Button">
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="Padding" Value="14,10"/>
+        <Style x:Key="Caption" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{StaticResource TextLight}" />
         </Style>
 
-        <Style TargetType="Frame" x:Key="Card">
-            <Setter Property="BackgroundColor" Value="{StaticResource CardBg}"/>
-            <Setter Property="CornerRadius" Value="16"/>
-            <Setter Property="HasShadow" Value="True"/>
-            <Setter Property="Padding" Value="12"/>
-            <Setter Property="Margin" Value="0,8"/>
+        <!-- Card -->
+        <Style x:Key="Card" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource CardBg}" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Margin" Value="0,8" />
         </Style>
 
-        <!-- Converters -->
-        <converters:ProgressConverter x:Key="ProgressConv" />
+        <!-- Buttons -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HeightRequest" Value="46" />
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0,4" />
+        </Style>
+
+        <Style x:Key="OutlineButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HeightRequest" Value="46" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0,4" />
+        </Style>
+
+        <!-- ProgressBar (no CornerRadius property in MAUI) -->
+        <Style TargetType="ProgressBar">
+            <Setter Property="ProgressColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+            <Setter Property="HeightRequest" Value="10" />
+        </Style>
+
+        <!-- Optional Shell colors -->
+        <Style TargetType="Shell">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource SoftBg}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextDark}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource TextDark}" />
+            <Setter Property="Shell.DisabledColor" Value="{StaticResource TextLight}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextLight}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource CardBg}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextLight}" />
+        </Style>
+
     </Application.Resources>
 </Application>

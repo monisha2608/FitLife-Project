@@ -3,27 +3,88 @@
     x:Class="FitLife.Views.WorkoutListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Workouts">
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    xmlns:models="clr-namespace:FitLife.Models"
+    x:DataType="vm:WorkoutsViewModel"
+    Title="Workouts"
+    Padding="16">
 
-    <VerticalStackLayout Spacing="8">
-        <SearchBar Placeholder="Search workouts..." />
-        <CollectionView ItemsSource="{Binding Workouts}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Style="{StaticResource Card}">
-                        <Grid ColumnDefinitions="80,*" ColumnSpacing="12">
-                            <Image Source="{Binding Image}" WidthRequest="72" HeightRequest="72" Aspect="AspectFill"/>
-                            <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                <Label Text="{Binding Title}" FontAttributes="Bold" />
-                                <Label Text="{Binding Category}" Style="{StaticResource Body}" />
-                                <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}" />
-                                <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" />
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <Button Text="Add Workout" Command="{Binding AddWorkoutCmd}" />
-    </VerticalStackLayout>
+    <!-- Single scroller: CollectionView handles scroll, spacing, header & footer -->
+    <CollectionView
+        ItemsSource="{Binding Workouts}"
+        SelectionMode="None"
+        VerticalOptions="FillAndExpand">
+
+        <!-- Even spacing between cards -->
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="14" />
+        </CollectionView.ItemsLayout>
+
+        <!-- SEARCH / FILTER HEADER -->
+        <CollectionView.Header>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Padding="0,0,0,8">
+                <SearchBar Placeholder="Search workouts..." Grid.Column="0" />
+                <Button Text="Filter" Style="{StaticResource OutlineButton}" Grid.Column="1" />
+            </Grid>
+        </CollectionView.Header>
+
+        <!-- WORKOUT CARD TEMPLATE -->
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:Workout">
+                <Frame
+                    Style="{StaticResource Card}"
+                    Padding="14"
+                    HasShadow="False"
+                    CornerRadius="12"
+                    Margin="0,2,0,2">
+
+                    <Grid ColumnDefinitions="80,*,Auto" ColumnSpacing="14">
+                        <Image
+                            Source="{Binding Image}"
+                            WidthRequest="80"
+                            HeightRequest="80"
+                            Aspect="AspectFill"
+                            VerticalOptions="Center" />
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding Title}"
+                                   FontAttributes="Bold"
+                                   FontSize="16"
+                                   TextColor="{StaticResource TextDark}" />
+                            <Label Text="{Binding Category}" Style="{StaticResource Body}" />
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}" Style="{StaticResource Caption}" />
+                                <Label Text="•" Style="{StaticResource Caption}" />
+                                <Label Text="{Binding Intensity}" Style="{StaticResource Caption}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="2"
+                                             Spacing="4"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding Calories, StringFormat='{}{0} cal'}"
+                                   Style="{StaticResource Caption}"
+                                   HorizontalOptions="End" />
+                            <Button Text="Start"
+                                    Style="{StaticResource PrimaryButton}"
+                                    WidthRequest="90"
+                                    HeightRequest="36"
+                                    CornerRadius="8" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+        <!-- ADD WORKOUT FOOTER -->
+        <CollectionView.Footer>
+            <Button
+                Text="Add Workout"
+                Command="{Binding AddWorkoutCmd}"
+                Style="{StaticResource PrimaryButton}"
+                Margin="0,10,0,10" />
+        </CollectionView.Footer>
+
+    </CollectionView>
 </ContentPage>

@@ -3,57 +3,105 @@
     x:Class="FitLife.Views.ProgressChartPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Progress">
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    xmlns:models="clr-namespace:FitLife.Models"
+    x:DataType="vm:ProgressViewModel"
+    Title="Progress"
+    Padding="16">
 
-    <VerticalStackLayout Spacing="12">
-        <Label Text="Weekly Activity" Style="{StaticResource H1}" />
+    <VerticalStackLayout Spacing="16">
 
+        <!-- Heading -->
+        <Label Text="Weekly Activity"
+               FontSize="28"
+               FontAttributes="Bold"
+               TextColor="{StaticResource PrimaryColor}"
+               Margin="0,0,0,6"
+               HorizontalOptions="Center" />
+
+        <!-- Summary -->
         <Frame Style="{StaticResource Card}">
-            <VerticalStackLayout>
-                <Label Text="Weekly Minutes vs Goal" Style="{StaticResource Body}"/>
-                <ProgressBar Progress="{Binding ProgressRatio}" HeightRequest="12"/>
-                <Label Text="{Binding MinutesSum, StringFormat='Done: {0} min'}"/>
-                <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"/>
-            </VerticalStackLayout>
-        </Frame>
-
-        <Frame Style="{StaticResource Card}">
-            <Grid HeightRequest="240" ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,*">
-                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[0].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[0].Day}" HorizontalOptions="Center" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Weekly Minutes vs Goal"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" />
+                    <ProgressBar Progress="{Binding ProgressRatio}"
+                                 HeightRequest="12"
+                                 ProgressColor="{StaticResource AccentColor}" />
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[1].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[1].Day}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[2].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[2].Day}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[3].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[3].Day}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[4].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[4].Day}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[5].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[5].Day}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center">
-                    <BoxView HeightRequest="{Binding Weekly[6].Minutes}" WidthRequest="26" CornerRadius="6" VerticalOptions="End" />
-                    <Label Text="{Binding Weekly[6].Day}" HorizontalOptions="Center" />
+                <VerticalStackLayout Spacing="2"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center">
+                    <Label Text="{Binding MinutesSum, StringFormat='Done: {0} min'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}"
+                           HorizontalOptions="End" />
+                    <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}"
+                           HorizontalOptions="End" />
                 </VerticalStackLayout>
             </Grid>
         </Frame>
+
+        <!-- Bar chart -->
+        <Frame Style="{StaticResource Card}">
+            <CollectionView
+                ItemsSource="{Binding Weekly}"
+                SelectionMode="None"
+                HeightRequest="240"
+                HorizontalOptions="FillAndExpand"
+                HorizontalScrollBarVisibility="Never">
+
+                <!-- Evenly fill row: 7 columns across the width -->
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="7"
+                                     HorizontalItemSpacing="24"
+                                     VerticalItemSpacing="0" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProgressEntry">
+                        <!-- No WidthRequest="Auto" (invalid). Let it stretch. -->
+                        <VerticalStackLayout
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                            Spacing="8"
+                            Padding="4,0">
+
+                            <Grid HeightRequest="180"
+                                  HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="End">
+                                <BoxView Color="{StaticResource AccentColor}"
+                                         WidthRequest="28"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="End"
+                                         HeightRequest="{Binding Minutes}"
+                                         CornerRadius="8" />
+                            </Grid>
+
+                            <Label Text="{Binding Day}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextDark}"
+                                   HorizontalOptions="Center" />
+
+                            <Label Text="{Binding Minutes, StringFormat='{}{0} min'}"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextLight}"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+
     </VerticalStackLayout>
 </ContentPage>

@@ -3,54 +3,121 @@
     x:Class="FitLife.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Dashboard">
+    xmlns:models="clr-namespace:FitLife.Models"
+    Title="Dashboard"
+    Padding="16">
+
+    <ContentPage.Resources>
+        <!-- Bright, adaptive FitLife header -->
+        <Style x:Key="PageTitle" TargetType="Label">
+            <Setter Property="FontSize" Value="36" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,0,12" />
+            <Setter Property="TextColor">
+                <Setter.Value>
+                    <AppThemeBinding Light="{StaticResource PrimaryColor}"
+                           Dark="{StaticResource AccentColor}" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Section header -->
+        <Style x:Key="SectionHeader" TargetType="Label" BasedOn="{StaticResource H2}">
+            <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Margin" Value="0,16,0,4" />
+        </Style>
+
+        <!-- Stat number -->
+        <Style x:Key="StatValue" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        </Style>
+
+        <!-- Small workout card -->
+        <Style x:Key="SmallCard" TargetType="Frame" BasedOn="{StaticResource Card}">
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="WidthRequest" Value="280" />
+            <Setter Property="HeightRequest" Value="130" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Margin" Value="0,0,12,0" />
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Spacing="12">
+        <VerticalStackLayout Spacing="18">
 
-            <Label Text="FitLife" Style="{StaticResource H1}" />
+            <!-- FitLife Header -->
+            <Label Text="FitLife" Style="{StaticResource PageTitle}" />
 
+            <!-- Top Button -->
+            <Button Text="+ New"
+              Style="{StaticResource OutlineButton}"
+              HorizontalOptions="Fill" />
+
+            <!-- Quick Stats -->
             <Frame Style="{StaticResource Card}">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Quick Stats" Style="{StaticResource H2}" />
-                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
-                        <VerticalStackLayout>
-                            <Label Text="Calories today" Style="{StaticResource Body}" />
-                            <Label Text="{Binding TotalCaloriesToday}" FontSize="22" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Minutes this week" Style="{StaticResource Body}" />
-                            <Label Text="{Binding MinutesThisWeek}" FontSize="22" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Calories today" Style="{StaticResource Caption}" />
+                        <Label Text="{Binding CaloriesToday, FallbackValue=0, TargetNullValue=0}"
+                   Style="{StaticResource StatValue}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
+                        <Label Text="Minutes this week" Style="{StaticResource Caption}" HorizontalOptions="End" />
+                        <Label Text="{Binding MinutesThisWeek, FallbackValue=0, TargetNullValue=0}"
+                   Style="{StaticResource StatValue}" HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Grid>
             </Frame>
 
-            <Label Text="Today’s Workouts" Style="{StaticResource H2}" />
+            <!-- Section heading -->
+            <Label Text="Today’s Workouts" Style="{StaticResource SectionHeader}" />
+            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.4" />
 
+            <!-- Horizontal workout cards -->
             <CollectionView ItemsSource="{Binding TodayWorkouts}"
-                            ItemsLayout="HorizontalList"
-                            HeightRequest="160">
+                      SelectionMode="None"
+                      HeightRequest="170"
+                      Margin="0,0,0,8">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Style="{StaticResource Card}" WidthRequest="220" Padding="12">
-                            <Grid ColumnDefinitions="80,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12">
-                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
-                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Category}" Style="{StaticResource Body}" />
-                                <Label Grid.Column="1" Grid.Row="2" Text="{Binding DurationMins, StringFormat='{}{0} min'}" />
-                            </Grid>
+                    <DataTemplate x:DataType="models:Workout">
+                        <Frame Style="{StaticResource SmallCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Title}"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       TextColor="{StaticResource TextDark}" />
+                                <Label Text="{Binding Category}" Style="{StaticResource Body}" />
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}" Style="{StaticResource Caption}" />
+                                    <Label Text="•" Style="{StaticResource Caption}" />
+                                    <Label Text="{Binding Calories, StringFormat='{}{0} cal'}" Style="{StaticResource Caption}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                <Button Text="Workouts"   Command="{Binding NavigateWorkoutsCmd}" />
-                <Button Text="Meals"      Grid.Column="1" Command="{Binding NavigateMealsCmd}" />
-            </Grid>
+            <!-- Bottom Buttons -->
+            <Button Text="Workouts"
+              Style="{StaticResource PrimaryButton}"
+              Margin="0,4,0,8"
+              Command="{Binding GoToWorkoutsCommand}" />
 
-            <Button Text="See Progress" Command="{Binding SeeProgressCmd}" />
+            <Button Text="See Progress"
+              Style="{StaticResource PrimaryButton}"
+              Margin="0,0,0,12"
+              Command="{Binding GoToProgressCommand}" />
 
         </VerticalStackLayout>
     </ScrollView>

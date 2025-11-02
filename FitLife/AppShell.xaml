@@ -4,12 +4,53 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:FitLife.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Title="FitLife">
 
+    <!-- Theme Colors from App.xaml -->
+    <Shell.Resources>
+        <Style TargetType="Shell">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource SoftBg}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource TextDark}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextDark}" />
+            <Setter Property="Shell.DisabledColor" Value="{StaticResource TextLight}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextLight}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource CardBg}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextLight}" />
+        </Style>
+    </Shell.Resources>
+
+    <!-- Navigation Structure -->
     <TabBar>
-        <ShellContent Route="Dashboard" Title="Dashboard" Icon="icon_home.png" ContentTemplate="{DataTemplate views:DashboardPage}" />
-        <ShellContent Route="Workouts"  Title="Workouts" Icon="icon_workout.png" ContentTemplate="{DataTemplate views:WorkoutListPage}" />
-        <ShellContent Route="Meals"     Title="Meals" Icon="icon_meal.png" ContentTemplate="{DataTemplate views:MealPlanPage}" />
-        <ShellContent Route="Progress"  Title="Progress" Icon="icon_progress.png" ContentTemplate="{DataTemplate views:ProgressChartPage}" />
+
+        <!-- 🏠 Dashboard -->
+        <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}"
+            Route="dashboard"
+            Icon="🏠" />
+
+        <!-- 💪 Workouts -->
+        <ShellContent
+            Title="Workouts"
+            ContentTemplate="{DataTemplate views:WorkoutListPage}"
+            Route="workouts"
+            Icon="💪" />
+
+        <!-- 🍎 Meals -->
+        <ShellContent
+            Title="Meals"
+            ContentTemplate="{DataTemplate views:MealPlanPage}"
+            Route="meals"
+            Icon="🍎" />
+
+        <!-- 📈 Progress -->
+        <ShellContent
+            Title="Progress"
+            ContentTemplate="{DataTemplate views:ProgressChartPage}"
+            Route="progress"
+            Icon="📈" />
+
     </TabBar>
+
 </Shell>
