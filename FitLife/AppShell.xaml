@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:FitLife.Views"
     Title="FitLife">
 
-    <!-- Theme Colors from App.xaml -->
+    <!-- 🎨 Shell theme colors (from App.xaml resources) -->
     <Shell.Resources>
         <Style TargetType="Shell">
             <Setter Property="Shell.BackgroundColor" Value="{StaticResource SoftBg}" />
@@ -20,37 +20,31 @@
         </Style>
     </Shell.Resources>
 
-    <!-- Navigation Structure -->
+    <!-- 🧭 Main navigation tabs -->
     <TabBar>
-
-        <!-- 🏠 Dashboard -->
+        <!-- Dashboard -->
         <ShellContent
             Title="Dashboard"
-            ContentTemplate="{DataTemplate views:DashboardPage}"
             Route="dashboard"
-            Icon="🏠" />
+            ContentTemplate="{DataTemplate views:DashboardPage}" />
 
-        <!-- 💪 Workouts -->
+        <!-- Workouts -->
         <ShellContent
             Title="Workouts"
-            ContentTemplate="{DataTemplate views:WorkoutListPage}"
             Route="workouts"
-            Icon="💪" />
+            ContentTemplate="{DataTemplate views:WorkoutListPage}" />
 
-        <!-- 🍎 Meals -->
+        <!-- Meals -->
         <ShellContent
             Title="Meals"
-            ContentTemplate="{DataTemplate views:MealPlanPage}"
             Route="meals"
-            Icon="🍎" />
+            ContentTemplate="{DataTemplate views:MealPlanPage}" />
 
-        <!-- 📈 Progress -->
+        <!-- Progress -->
         <ShellContent
             Title="Progress"
-            ContentTemplate="{DataTemplate views:ProgressChartPage}"
             Route="progress"
-            Icon="📈" />
-
+            ContentTemplate="{DataTemplate views:ProgressChartPage}" />
     </TabBar>
 
 </Shell>

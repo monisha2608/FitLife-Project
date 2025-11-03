@@ -1,12 +1,16 @@
 ﻿using FitLife.ViewModels;
 
-namespace FitLife.Views;
-
-public partial class WorkoutListPage : ContentPage
+namespace FitLife.Views
 {
-    public WorkoutListPage()
+    // Code-behind for the Workouts page
+    public partial class WorkoutListPage : ContentPage
     {
-        InitializeComponent();
-        BindingContext = new WorkoutsViewModel();
+        public WorkoutListPage()
+        {
+            InitializeComponent();
+
+            // Set the ViewModel for data binding
+            BindingContext = new WorkoutsViewModel();
+        }
     }
 }

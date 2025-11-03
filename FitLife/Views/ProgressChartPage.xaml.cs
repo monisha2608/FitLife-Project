@@ -1,12 +1,16 @@
 ﻿using FitLife.ViewModels;
 
-namespace FitLife.Views;
-
-public partial class ProgressChartPage : ContentPage
+namespace FitLife.Views
 {
-    public ProgressChartPage()
+    // Code-behind for the Progress Chart page
+    public partial class ProgressChartPage : ContentPage
     {
-        InitializeComponent();
-        BindingContext = new ProgressViewModel();
+        public ProgressChartPage()
+        {
+            InitializeComponent();
+
+            // Set the ViewModel for data binding
+            BindingContext = new ProgressViewModel();
+        }
     }
 }

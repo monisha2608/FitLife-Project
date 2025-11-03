@@ -2,25 +2,39 @@
 using FitLife.Models;
 using FitLife.Services;
 
-namespace FitLife.ViewModels;
-
-public class WorkoutsViewModel : BaseViewModel
+namespace FitLife.ViewModels
 {
-    public ObservableCollection<Workout> Workouts { get; } =
-        new ObservableCollection<Workout>(MockDataService.GetWorkouts());
-
-    public Command AddWorkoutCmd { get; }
-
-    public WorkoutsViewModel()
+    // ViewModel for the workouts screen
+    public class WorkoutsViewModel : BaseViewModel
     {
-        AddWorkoutCmd = new Command(async () => await AddWorkout());
-    }
+        // List of workouts (loaded from mock data)
+        public ObservableCollection<Workout> Workouts { get; } =
+            new ObservableCollection<Workout>(MockDataService.GetWorkouts());
 
-    private async Task AddWorkout()
-    {
-        string title = await Application.Current!.MainPage!.DisplayPromptAsync("Add workout", "Workout title:");
-        if (string.IsNullOrWhiteSpace(title)) return;
-        var w = new Workout { Title = title, Category = "Custom", DurationMins = 20, Calories = 150, Image = "workout1.png" };
-        Workouts.Add(w);
+        // Command for adding a new workout
+        public Command AddWorkoutCmd { get; }
+
+        public WorkoutsViewModel()
+        {
+            AddWorkoutCmd = new Command(async () => await AddWorkout());
+        }
+
+        // Adds a new custom workout through a prompt
+        private async Task AddWorkout()
+        {
+            string title = await Application.Current!.MainPage!.DisplayPromptAsync("Add workout", "Workout title:");
+            if (string.IsNullOrWhiteSpace(title)) return;
+
+            var w = new Workout
+            {
+                Title = title,
+                Category = "Custom",
+                DurationMins = 20,
+                Calories = 150,
+                Image = "workout1.png"
+            };
+
+            Workouts.Add(w);
+        }
     }
 }

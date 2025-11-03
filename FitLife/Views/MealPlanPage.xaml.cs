@@ -1,12 +1,16 @@
 ﻿using FitLife.ViewModels;
 
-namespace FitLife.Views;
-
-public partial class MealPlanPage : ContentPage
+namespace FitLife.Views
 {
-    public MealPlanPage()
+    // Code-behind for the Meal Plan page
+    public partial class MealPlanPage : ContentPage
     {
-        InitializeComponent();
-        BindingContext = new MealsViewModel();
+        public MealPlanPage()
+        {
+            InitializeComponent();
+
+            // Connect the page to its ViewModel
+            BindingContext = new MealsViewModel();
+        }
     }
 }

@@ -9,16 +9,15 @@
     Title="Meal Plan"
     Padding="16">
 
-    <!-- Header style lives in Resources (not in visual tree) -->
     <ContentPage.Resources>
-        <!-- Make headers bright and visible on dark background -->
+        <!-- Header text style -->
         <Style x:Key="MealHeader" TargetType="Label" BasedOn="{StaticResource H2}">
             <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
             <Setter Property="Margin" Value="0,10,0,4" />
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
 
-        <!-- Row card style -->
+        <!-- Meal card row style -->
         <Style x:Key="MealRowCard" TargetType="Frame" BasedOn="{StaticResource Card}">
             <Setter Property="Padding" Value="12" />
             <Setter Property="Margin" Value="0,6,0,0" />
@@ -28,12 +27,15 @@
     <ScrollView>
         <VerticalStackLayout Spacing="14">
 
-            <!-- Summary -->
+            <!-- Summary card -->
             <Frame Style="{StaticResource Card}">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Total Calories Today" Style="{StaticResource Caption}" />
-                        <Label Text="{Binding TotalCalories}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}" />
+                        <Label Text="{Binding TotalCalories}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource PrimaryColor}" />
                     </VerticalStackLayout>
                     <Button Text="Edit Plan" Style="{StaticResource OutlineButton}" />
                 </Grid>
@@ -53,9 +55,9 @@
                                     <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2"
-                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                       Style="{StaticResource Caption}"
-                       VerticalOptions="Center" />
+                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
+                                       Style="{StaticResource Caption}"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -76,9 +78,9 @@
                                     <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2"
-                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                       Style="{StaticResource Caption}"
-                       VerticalOptions="Center" />
+                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
+                                       Style="{StaticResource Caption}"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -99,9 +101,9 @@
                                     <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2"
-                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                       Style="{StaticResource Caption}"
-                       VerticalOptions="Center" />
+                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
+                                       Style="{StaticResource Caption}"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -122,15 +124,16 @@
                                     <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2"
-                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                       Style="{StaticResource Caption}"
-                       VerticalOptions="Center" />
+                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
+                                       Style="{StaticResource Caption}"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <!-- Add new meal button -->
             <Button Text="Add Meal" Command="{Binding AddMealCmd}" Style="{StaticResource PrimaryButton}" />
 
         </VerticalStackLayout>
