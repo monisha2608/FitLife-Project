@@ -28,18 +28,28 @@
         <VerticalStackLayout Spacing="14">
 
             <!-- Summary card -->
-            <Frame Style="{StaticResource Card}">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Border
+    StrokeThickness="0"
+    Stroke="Transparent"
+    Background="{StaticResource SoftBg}"
+    Margin="0,8"
+    Padding="0"
+    StrokeShape="RoundRectangle 12">
+                <!-- Rounded edges -->
+
+                <Grid Padding="12" ColumnDefinitions="*,Auto">
                     <VerticalStackLayout Spacing="6">
-                        <Label Text="Total Calories Today" Style="{StaticResource Caption}" />
+                        <Label Text="Total Calories Today" Style="{StaticResource Caption}" FontAttributes="Bold" />
                         <Label Text="{Binding TotalCalories}"
-                               FontSize="22"
-                               FontAttributes="Bold"
-                               TextColor="{StaticResource PrimaryColor}" />
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryColor}" />
                     </VerticalStackLayout>
-                    <Button Text="Edit Plan" Style="{StaticResource OutlineButton}" />
+
+                    <Button Grid.Column="1" Text="Edit Plan" Style="{StaticResource OutlineButton}" />
                 </Grid>
-            </Frame>
+            </Border>
+
 
             <!-- ===== Breakfast ===== -->
             <Label Text="Breakfast" Style="{StaticResource MealHeader}" />

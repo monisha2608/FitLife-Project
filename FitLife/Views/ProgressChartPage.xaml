@@ -21,34 +21,33 @@
 
         <!-- Summary section -->
         <Frame Style="{StaticResource Card}">
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Weekly Minutes vs Goal"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource TextDark}" />
-                    <ProgressBar Progress="{Binding ProgressRatio}"
-                                 HeightRequest="12"
-                                 ProgressColor="{StaticResource AccentColor}" />
-                </VerticalStackLayout>
+            <VerticalStackLayout Spacing="6">
+                <!-- Title -->
+                <Label Text="Weekly Minutes vs Goal"
+               FontSize="16"
+               FontAttributes="Bold"
+               TextColor="{StaticResource TextDark}" />
 
-                <!-- Right side numbers -->
-                <VerticalStackLayout Spacing="2"
-                                     HorizontalOptions="End"
-                                     VerticalOptions="Center">
+                <!-- Progress bar -->
+                <ProgressBar Progress="{Binding ProgressRatio}"
+                     HeightRequest="12"
+                     ProgressColor="{StaticResource AccentColor}" />
+
+                <!-- Numbers moved below bar -->
+                <HorizontalStackLayout Spacing="12"
+                               HorizontalOptions="Center">
                     <Label Text="{Binding MinutesSum, StringFormat='Done: {0} min'}"
-                           FontSize="14"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource TextDark}"
-                           HorizontalOptions="End" />
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextDark}" />
                     <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"
-                           FontSize="14"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource TextDark}"
-                           HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Grid>
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextDark}" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
         </Frame>
+
 
         <!-- Weekly bar chart -->
         <Frame Style="{StaticResource Card}">
