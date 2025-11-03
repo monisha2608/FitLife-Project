@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:FitLife.Views"
     Title="FitLife">
 
-    <!-- 🎨 Shell theme colors (from App.xaml resources) -->
+    <!--  Shell theme colors (from App.xaml resources) -->
     <Shell.Resources>
         <Style TargetType="Shell">
             <Setter Property="Shell.BackgroundColor" Value="{StaticResource SoftBg}" />
@@ -20,7 +20,7 @@
         </Style>
     </Shell.Resources>
 
-    <!-- 🧭 Main navigation tabs -->
+    <!--  Main navigation tabs -->
     <TabBar>
         <!-- Dashboard -->
         <ShellContent
