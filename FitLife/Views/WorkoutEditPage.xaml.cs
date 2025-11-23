@@ -22,4 +22,9 @@ public partial class WorkoutEditPage : ContentPage
         _viewModel = new WorkoutEditViewModel(); // create view model
         BindingContext = _viewModel; // bind data to UI
     }
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
 }

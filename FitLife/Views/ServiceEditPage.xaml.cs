@@ -6,9 +6,9 @@ namespace FitLife.Views;
 public partial class ServiceEditPage : ContentPage
 {
     private readonly ServiceEditViewModel _viewModel; // view model for this page
-    private readonly Service? _initialService; // service passed for editing
+    private readonly ServiceApiModel? _initialService; // service passed for editing
 
-    public ServiceEditPage(Service? service = null)
+    public ServiceEditPage(ServiceApiModel? service = null)
     {
         InitializeComponent(); // load XAML UI
         _viewModel = new ServiceEditViewModel(); // create view model

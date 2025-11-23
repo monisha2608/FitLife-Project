@@ -6,71 +6,106 @@
     xmlns:vm="clr-namespace:FitLife.ViewModels"
     x:DataType="vm:ServiceDetailViewModel"
     Title="Service Details"
-    Padding="16">
+    Padding="24">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="12">
+        <VerticalStackLayout Spacing="16"
+                             HorizontalOptions="Center">
 
-            <!-- back button -->
-            <Button Text="← Back"
-                    HorizontalOptions="Start"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource PrimaryColor}"
-                    Clicked="OnBackClicked" />
 
-            <!-- service name -->
+            <!-- BIG SERVICE NAME HEADING -->
             <Label Text="{Binding Service.Name}"
-                   FontSize="24"
+                   FontSize="40"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource TextDark}" />
+                   TextColor="Pink"
+                   HorizontalTextAlignment="Center" />
 
             <!-- service type -->
             <Label Text="{Binding Service.Type}"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource PrimaryColor}" />
+                   FontSize="18"
+                   TextColor="{StaticResource PrimaryColor}"
+                   HorizontalTextAlignment="Center" />
 
-            <!-- service description -->
+            <!-- description -->
             <Label Text="{Binding Service.Description}"
                    FontSize="14"
-                   TextColor="{StaticResource TextLight}" />
+                   TextColor="#CCCCCC"
+                   HorizontalTextAlignment="Center" />
 
-            <!-- service details -->
-            <Label Text="{Binding Service.Trainer, StringFormat='Trainer: {0}'}" />
-            <Label Text="{Binding Service.DayOfWeek, StringFormat='Day: {0}'}" />
-            <Label Text="{Binding Service.StartTime, StringFormat='Starts: {0}'}" />
-            <Label Text="{Binding Service.DurationMins, StringFormat='Duration: {0} min'}" />
-            <Label Text="{Binding Service.Level, StringFormat='Level: {0}'}" />
+            <!-- DETAILS -->
+            <Label Text="{Binding Service.Trainer, StringFormat='Trainer: {0}'}"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
 
-            <!-- price -->
+            <Label Text="{Binding Service.DayOfWeek, StringFormat='Day: {0}'}"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
+
+            <Label Text="{Binding Service.StartTime, StringFormat='Starts: {0}'}"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
+
+            <Label Text="{Binding Service.DurationMins, StringFormat='Duration: {0} min'}"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
+
+            <Label Text="{Binding Service.Level, StringFormat='Level: {0}'}"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
+
+            <!-- PRICE -->
             <Label Text="{Binding Service.Price, StringFormat='Price: ${0:F2}'}"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource AccentColor}" />
+                   FontSize="18"
+                   TextColor="#4CAF50"
+                   HorizontalTextAlignment="Center" />
 
-            <!-- action buttons -->
-            <HorizontalStackLayout Spacing="8" Margin="0,12,0,0">
+            <!-- BUTTONS CENTERED -->
+            <HorizontalStackLayout Spacing="12"
+                                   Margin="0,20,0,0"
+                                   HorizontalOptions="Center">
 
-                <!-- register button -->
                 <Button Text="Register"
                         Clicked="OnRegisterClicked"
-                        Style="{StaticResource PrimaryButton}" />
+                        BackgroundColor="#2196F3"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        Padding="20,12" />
 
-                <!-- admin edit button -->
                 <Button x:Name="EditButton"
                         Text="Edit"
                         Clicked="OnEditClicked"
-                        Style="{StaticResource OutlineButton}"
+                        BackgroundColor="#FF9800"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        Padding="20,12"
                         IsVisible="False" />
 
-                <!-- admin delete button -->
                 <Button x:Name="DeleteButton"
                         Text="Delete"
                         Clicked="OnDeleteClicked"
                         BackgroundColor="Tomato"
-                        TextColor="White"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        Padding="20,12"
                         IsVisible="False" />
 
             </HorizontalStackLayout>
+            <!-- Back button -->
 
+            <Button Text="Back"
+Clicked="OnBackClicked"
+BackgroundColor="Wheat"
+TextColor="#1E1E1E"
+FontAttributes="Bold"
+HorizontalOptions="FillAndExpand"
+CornerRadius="10"
+Padding="16,10"
+Margin="0,0,0,10" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -12,62 +12,71 @@
     <ScrollView>
         <VerticalStackLayout Spacing="12">
 
-            <!-- page title -->
+            <!-- Back button (same style as MealEditPage) -->
+            <Button Text="Back"
+                    Clicked="OnBackClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource PrimaryColor}"
+                    HorizontalOptions="Start" />
+
+            <!-- Page title -->
             <Label Text="{Binding PageTitle}"
                    FontSize="24"
                    FontAttributes="Bold"
                    TextColor="{StaticResource PrimaryColor}" />
 
-            <!-- service selector -->
-            <Label Text="Service" FontAttributes="Bold" />
+            <!-- Service selection -->
+            <Label Text="Service" />
             <Picker ItemsSource="{Binding Services}"
                     ItemDisplayBinding="{Binding Name}"
                     SelectedItem="{Binding SelectedService}" />
 
-            <!-- workout title -->
-            <Label Text="Title" FontAttributes="Bold" />
-            <Entry Text="{Binding Title}" Placeholder="Workout title" />
+            <!-- Workout title -->
+            <Label Text="Title" />
+            <Entry Text="{Binding Title}"
+                   Placeholder="Workout title" />
 
-            <!-- workout description -->
-            <Label Text="Description" FontAttributes="Bold" />
-            <Editor Text="{Binding Description}" AutoSize="TextChanges" />
+            <!-- Category -->
+            <Label Text="Category" />
+            <Entry Text="{Binding Category}"
+                   Placeholder="e.g. Strength, Yoga" />
 
-            <!-- workout category -->
-            <Label Text="Category" FontAttributes="Bold" />
-            <Entry Text="{Binding Category}" Placeholder="e.g. Strength, Yoga" />
+            <!-- Level -->
+            <Label Text="Level" />
+            <Entry Text="{Binding Level}"
+                   Placeholder="Beginner / Intermediate / Advanced" />
 
-            <!-- duration and calories -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                <VerticalStackLayout Grid.Column="0">
-                    <Label Text="Duration (min)" FontAttributes="Bold" />
-                    <Entry Text="{Binding DurationMins}" Keyboard="Numeric" />
-                </VerticalStackLayout>
+            <!-- Duration -->
+            <Label Text="Duration (min)" />
+            <Entry Text="{Binding DurationMins}"
+                   Keyboard="Numeric" />
 
-                <VerticalStackLayout Grid.Column="1">
-                    <Label Text="Calories" FontAttributes="Bold" />
-                    <Entry Text="{Binding Calories}" Keyboard="Numeric" />
-                </VerticalStackLayout>
-            </Grid>
+            <!-- Calories -->
+            <Label Text="Calories" />
+            <Entry Text="{Binding Calories}"
+                   Keyboard="Numeric" />
 
-            <!-- workout level -->
-            <Label Text="Level" FontAttributes="Bold" />
-            <Entry Text="{Binding Level}" Placeholder="Beginner / Intermediate / Advanced" />
+            <!-- Description -->
+            <Label Text="Description" />
+            <Editor Text="{Binding Description}"
+                    AutoSize="TextChanges"
+                    HeightRequest="80" />
 
-            <!-- action buttons -->
-            <HorizontalStackLayout Spacing="12" Margin="0,16,0,0">
-                <Button Text="Save"
-                        Command="{Binding SaveCommand}"
-                        BackgroundColor="{StaticResource PrimaryColor}"
-                        TextColor="White"
-                        HorizontalOptions="FillAndExpand" />
+            <!-- Save button (full-width, like meal page) -->
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    TextColor="White"
+                    CornerRadius="20"
+                    Margin="0,12,0,0" />
 
-                <Button Text="Delete"
-                        Command="{Binding DeleteCommand}"
-                        IsVisible="{Binding CanDelete}"
-                        BackgroundColor="Red"
-                        TextColor="White"
-                        HorizontalOptions="FillAndExpand" />
-            </HorizontalStackLayout>
+            <!-- Delete button (full-width, like meal page) -->
+            <Button Text="Delete"
+                    Command="{Binding DeleteCommand}"
+                    IsVisible="{Binding CanDelete}"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    CornerRadius="20" />
 
         </VerticalStackLayout>
     </ScrollView>

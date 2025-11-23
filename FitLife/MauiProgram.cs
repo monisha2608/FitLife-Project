@@ -22,8 +22,7 @@ namespace FitLife
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-            // Dependency Injection registrations
-            builder.Services.AddSingleton<DatabaseService>();
+           
 
             // ViewModels
             builder.Services.AddTransient<ServiceListViewModel>();

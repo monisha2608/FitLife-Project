@@ -6,36 +6,67 @@
     xmlns:vm="clr-namespace:FitLife.ViewModels"
     x:DataType="vm:LoginViewModel"
     Title="Login"
+    BackgroundColor="#0F172A"
     Padding="24">
 
-    <VerticalStackLayout Spacing="16" VerticalOptions="Center">
+    <VerticalStackLayout Spacing="20"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
 
-        <!-- Page title -->
-        <Label Text="FitLife Login"
-               FontSize="28"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+        <!-- Glowing Card Wrapper -->
+        <Frame BackgroundColor="#1E293B"
+               BorderColor="#3B82F6"
+               CornerRadius="20"
+               HasShadow="True"
+               Padding="24"
+               WidthRequest="360">
 
-        <!-- Username input -->
-        <Entry Placeholder="Username"
-               Text="{Binding Username}" />
+            <VerticalStackLayout Spacing="16">
 
-        <!-- Password input -->
-        <Entry Placeholder="Password"
-               IsPassword="True"
-               Text="{Binding Password}" />
+                <!-- Page title -->
+                <Label Text="FitLife Login"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="White" />
 
-        <!-- Login button -->
-        <Button Text="Login"
-                Command="{Binding LoginCommand}"
-                BackgroundColor="#2F80ED"
-                TextColor="White" />
+                <!-- Username input -->
+                <Entry Placeholder="Username"
+                       Text="{Binding Username}"
+                       BackgroundColor="#334155"
+                       TextColor="White"
+                       PlaceholderColor="#94A3B8"
+                       HeightRequest="48"
+                       Margin="0,5,0,0" />
 
-        <!-- Small hint text -->
-        <Label Text="Hint: admin / admin123 for admin access"
-               FontSize="12"
-               TextColor="#6B7280"
-               HorizontalOptions="Center" />
+                <!-- Password input -->
+                <Entry Placeholder="Password"
+                       IsPassword="True"
+                       Text="{Binding Password}"
+                       BackgroundColor="#334155"
+                       TextColor="White"
+                       PlaceholderColor="#94A3B8"
+                       HeightRequest="48" />
+
+                <!-- Login button -->
+                <Button Text="Login"
+                        Command="{Binding LoginCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="14"
+                        HeightRequest="50"
+                        Margin="0,10,0,0" />
+
+                <!-- Hint text -->
+                <Label Text="Hint: admin / admin123 for admin access"
+                       FontSize="12"
+                       TextColor="#CBD5F5"
+                       HorizontalOptions="Center" />
+
+            </VerticalStackLayout>
+        </Frame>
 
     </VerticalStackLayout>
 </ContentPage>

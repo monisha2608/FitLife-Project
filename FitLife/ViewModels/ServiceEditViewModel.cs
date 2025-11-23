@@ -94,7 +94,7 @@ namespace FitLife.ViewModels
         }
 
         // Load data from existing service or prepare new form
-        public Task LoadFromService(Service? service)
+        public Task LoadFromService(ServiceApiModel? service)
         {
             if (service == null)
             {

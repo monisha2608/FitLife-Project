@@ -37,14 +37,16 @@
             <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
         </Style>
 
-        <!-- Card style for workouts -->
+        <!-- Horizontal workout cards -->
         <Style x:Key="SmallCard" TargetType="Frame" BasedOn="{StaticResource Card}">
             <Setter Property="Padding" Value="12" />
-            <Setter Property="WidthRequest" Value="280" />
+            <Setter Property="WidthRequest" Value="260" />
             <Setter Property="HeightRequest" Value="130" />
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="Margin" Value="0,0,12,0" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="CornerRadius" Value="16" />
+            <!-- margin left-right handled by ItemSpacing, so only top/bottom -->
+            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="BackgroundColor" Value="White" />
         </Style>
     </ContentPage.Resources>
 
@@ -53,11 +55,6 @@
 
             <!-- App title -->
             <Label Text="FitLife" Style="{StaticResource PageTitle}" />
-
-            <!-- Add new button -->
-            <Button Text="+ New"
-                    Style="{StaticResource OutlineButton}"
-                    HorizontalOptions="Fill" />
 
             <!-- Stats box -->
             <Frame Style="{StaticResource Card}">
@@ -71,60 +68,76 @@
                     </VerticalStackLayout>
 
                     <!-- Minutes block -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
-                        <Label Text="Minutes this week" Style="{StaticResource Caption}" HorizontalOptions="End" />
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="4"
+                                         HorizontalOptions="End">
+                        <Label Text="Minutes this week"
+                               Style="{StaticResource Caption}"
+                               HorizontalOptions="End" />
                         <Label Text="{Binding MinutesThisWeek, FallbackValue=0, TargetNullValue=0}"
-                               Style="{StaticResource StatValue}" HorizontalOptions="End" />
+                               Style="{StaticResource StatValue}"
+                               HorizontalOptions="End" />
                     </VerticalStackLayout>
 
                 </Grid>
             </Frame>
 
             <!-- Workouts section title -->
-            <Label Text="Today’s Workouts" Style="{StaticResource SectionHeader}" />
+            <Label Text="Workouts" Style="{StaticResource SectionHeader}" />
 
             <!-- Divider line -->
-            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.4" />
+            <BoxView HeightRequest="1"
+                     Color="{StaticResource BorderColor}"
+                     Opacity="0.4" />
 
-            <!-- List of workouts -->
-            <CollectionView ItemsSource="{Binding TodayWorkouts}" SelectionMode="None">
+            <!-- HORIZONTAL list of workouts -->
+            <CollectionView ItemsSource="{Binding TodayWorkouts}"
+                            SelectionMode="None"
+                            HeightRequest="150"
+                            Margin="0,8,0,8">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="16" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
 
                         <!-- Workout card -->
-                        <Frame BackgroundColor="White"
-                               CornerRadius="16"
-                               Margin="0,10,10,10"
-                               Padding="12"
-                               HasShadow="True">
-
+                        <Frame Style="{StaticResource SmallCard}">
                             <VerticalStackLayout Spacing="4">
 
                                 <!-- Workout title -->
                                 <Label Text="{Binding Title}"
                                        FontSize="18"
                                        FontAttributes="Bold"
-                                       TextColor="{StaticResource TextDark}" />
+                                       TextColor="DarkCyan" />
 
                                 <!-- Workout category -->
                                 <Label Text="{Binding Category}"
                                        FontSize="14"
-                                       TextColor="{StaticResource TextLight}" />
+                                       TextColor="{StaticResource TextLight}" 
+                                       FontAttributes="Bold"/>
 
                                 <!-- Duration and calories -->
                                 <HorizontalStackLayout Spacing="8">
-                                    <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}" />
-                                    <Label Text="•" />
-                                    <Label Text="{Binding Calories, StringFormat='{}{0} kcal'}" />
+                                    <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}"
+                                           TextColor="{StaticResource TextLight}" 
+                                           FontAttributes="Bold"/>
+                                    <Label Text="•"
+                                           TextColor="{StaticResource TextLight}" />
+                                    <Label Text="{Binding Calories, StringFormat='{}{0} kcal'}"
+                                           TextColor="{StaticResource TextLight}" 
+                                           FontAttributes="Bold"/>
                                 </HorizontalStackLayout>
 
                                 <!-- Workout level -->
                                 <Label Text="{Binding Level}"
                                        FontSize="12"
-                                       TextColor="{StaticResource AccentColor}" />
+                                       TextColor="{StaticResource AccentColor}" 
+                                       FontAttributes="Bold"/>
 
                             </VerticalStackLayout>
-
                         </Frame>
 
                     </DataTemplate>

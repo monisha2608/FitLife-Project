@@ -9,43 +9,75 @@
     Title="Services">
 
     <ContentPage.Content>
-        <VerticalStackLayout Padding="16" Spacing="12">
+        <VerticalStackLayout Padding="24,40,24,24"
+                             Spacing="20">
 
-            <!-- page heading -->
-            <Label Text="Available Services"
-                   FontSize="24"
+            <!-- Main centered heading -->
+            <Label Text="Services"
+                   FontSize="32"
                    FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White" />
+
+            <!-- Sub heading -->
+            <Label Text="Available Services"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
                    TextColor="{StaticResource PrimaryColor}" />
 
-            <!-- add service button (visible only for admin) -->
+            <!-- Highlighted Add Service button (admin only) -->
             <Button x:Name="AddServiceButton"
-                    Text="Add Service"
-                    HorizontalOptions="End"
+                    Text="+ Add Service"
                     Clicked="OnAddServiceClicked"
-                    IsVisible="False" />
+                    IsVisible="False"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    Padding="16,10"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0"
+                    Shadow="{Shadow Radius=10, Opacity=0.6}" />
 
+            <!-- Services list -->
             <CollectionView ItemsSource="{Binding Services}"
-                            SelectionMode="None">
+                            SelectionMode="None"
+                            Margin="0,20,0,0">
+
+                <!-- Real spacing between service cards -->
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:ServiceApiModel">
-                        <Frame Padding="12"
-                               Margin="0,0,0,8"
-                               HasShadow="True">
 
-                            <!-- tap to open service details -->
+                        <!-- Service card -->
+                        <Frame Padding="20"
+                               CornerRadius="14"
+                               HasShadow="True"
+                               BackgroundColor="#111111"
+                               BorderColor="White">
+
+                            <!-- Tap to open service details -->
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Tapped="OnServiceTapped"
                                     CommandParameter="{Binding}" />
                             </Frame.GestureRecognizers>
 
-                            <VerticalStackLayout Spacing="4">
-                                <!-- service name -->
+                            <VerticalStackLayout Spacing="6">
+                                <!-- Service name -->
                                 <Label Text="{Binding Name}"
                                        FontAttributes="Bold"
-                                       FontSize="18"
-                                       TextColor="{StaticResource TextDark}" />
+                                       FontSize="20"
+                                       TextColor="White" />
                             </VerticalStackLayout>
+
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
