@@ -31,14 +31,15 @@ namespace FitLife.Views
         {
             base.OnAppearing();
 
-            // Update visibility based on current user
-            AddMealButton.IsVisible = AppState.IsAdmin;
+            // prefer explicit service id; fallback to registered one
+            int? idToUse = ServiceId > 0
+                ? ServiceId
+                : AppState.RegisteredServiceId;
 
-            // Load meals based on service
-            if (ServiceId > 0)
-                await _viewModel.LoadMealsForServiceAsync(ServiceId);
-            else
-                await _viewModel.LoadMealsForServiceAsync(0);
+            await _viewModel.LoadMealsForServiceAsync(idToUse);
+
+            // Show Add button only for admin
+            AddMealButton.IsVisible = AppState.IsAdmin;
         }
 
         // Navigate to add meal page

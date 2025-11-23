@@ -1,78 +1,63 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using FitLife.Helpers;
 using FitLife.Models;
 using FitLife.Services;
+using Microsoft.Maui.Controls;
 
 namespace FitLife.ViewModels
 {
-    // ViewModel for meals screen
     public class MealsViewModel : BaseViewModel
     {
-        // API clients
         private readonly MealsApiClient _mealsApi = new();
-        private readonly ServicesApiClient _servicesApi = new();
 
-        // List of meals
         public ObservableCollection<MealApiModel> Meals { get; } = new();
 
-        // Currently selected service id
-        public int CurrentServiceId { get; private set; }
-
-        // Refresh command
-        public ICommand RefreshCommand { get; }
+        public ICommand LoadMealsCommand { get; }
 
         public MealsViewModel()
         {
             Title = "Meals";
-            RefreshCommand = new Command(async () => await LoadMealsForServiceAsync(CurrentServiceId));
+            LoadMealsCommand = new Command<int?>(async serviceId => await LoadMealsForServiceAsync(serviceId));
         }
 
-        // Load meals for specific service, or all if id is 0
-        public async Task LoadMealsForServiceAsync(int serviceId)
+        // load meals only for one service
+        public async Task LoadMealsForServiceAsync(int? serviceId)
         {
             if (IsBusy) return;
-
             IsBusy = true;
+
             try
             {
-                CurrentServiceId = serviceId;
                 Meals.Clear();
 
-                List<MealApiModel> items;
+                // pick service id – prefer param, then registered service
+                int? targetServiceId = serviceId;
 
-                // Get meals based on filter
-                if (serviceId > 0)
-                    items = await _mealsApi.GetMealsForServiceAsync(serviceId);
-                else
-                    items = await _mealsApi.GetMealsAsync();
-
-                // Load services to match service names
-                var services = await _servicesApi.GetServicesAsync();
-
-                foreach (var m in items)
+                if (!targetServiceId.HasValue || targetServiceId.Value == 0)
                 {
-                    var serviceName = services
-                        .FirstOrDefault(s => s.Id == m.ServiceId)?.Name ?? string.Empty;
-
-                    // Add meal to list
-                    Meals.Add(new MealApiModel
-                    {
-                        Id = m.Id,
-                        ServiceId = m.ServiceId,
-                        Name = m.Name,
-                        Description = m.Description,
-                        Type = m.Type,
-                        Calories = m.Calories
-                    });
+                    if (AppState.RegisteredServiceId.HasValue)
+                        targetServiceId = AppState.RegisteredServiceId.Value;
                 }
+
+                // if still null, user not registered – nothing to show
+                if (!targetServiceId.HasValue)
+                    return;
+
+                var allMeals = await _mealsApi.GetMealsAsync();
+
+                var filtered = allMeals
+                    .Where(m => m.ServiceId == targetServiceId.Value)
+                    .ToList();
+
+                foreach (var meal in filtered)
+                    Meals.Add(meal);
             }
             catch (Exception ex)
             {
-                // Show error if loading fails
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error loading meals",
-                    ex.Message,
-                    "OK");
+                var page = Application.Current.MainPage;
+                if (page != null)
+                    await page.DisplayAlert("Error loading meals", ex.Message, "OK");
             }
             finally
             {

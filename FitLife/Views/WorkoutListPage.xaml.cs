@@ -1,8 +1,7 @@
 ﻿using FitLife.Helpers;
 using FitLife.Models;
 using FitLife.ViewModels;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
+
 
 namespace FitLife.Views
 {
@@ -44,32 +43,31 @@ namespace FitLife.Views
         }
 
         // when workout is tapped
+        // when workout is tapped
         private async void OnWorkoutSelected(object sender, SelectionChangedEventArgs e)
         {
-            // no item selected
             if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
                 return;
 
-            // wrong item type
+            // clear highlight right away
+            ((CollectionView)sender).SelectedItem = null;
+
+            // if not admin, just show a message and stop
+            if (!AppState.IsAdmin)
+            {
+                await DisplayAlert("View only", "Only admin can edit workouts.", "OK");
+                return;
+            }
+
             if (e.CurrentSelection[0] is not WorkoutApiModel selected)
                 return;
 
-            // clear highlight
-            ((CollectionView)sender).SelectedItem = null;
-
-            // go to edit page with selected workout
             var route = $"workoutEdit?workoutId={selected.Id}&serviceId={selected.ServiceId}";
             await Shell.Current.GoToAsync(route);
         }
-    }
 
-    // helper for async command support
-    public static class CommandExtensions
-    {
-        public static Task ExecuteAsync(this Command command, object? parameter)
-        {
-            command.Execute(parameter);
-            return Task.CompletedTask;
-        }
+
+        // helper for async command support
+
     }
 }

@@ -1,5 +1,4 @@
 using FitLife.ViewModels;
-
 namespace FitLife.Views;
 
 [QueryProperty(nameof(WorkoutId), "workoutId")]
@@ -26,5 +25,6 @@ public partial class WorkoutEditPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+    
 
 }
