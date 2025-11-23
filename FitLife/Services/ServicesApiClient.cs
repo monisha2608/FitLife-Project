@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using FitLife.Models;
@@ -8,82 +9,78 @@ namespace FitLife.Services
     // Handles API calls for services
     public class ServicesApiClient
     {
-        // Base URL for the API
-        private const string BaseUrl = "https://localhost:7232";
+        private readonly HttpClient _httpClient;
 
-        private readonly HttpClient _http;
-        private readonly JsonSerializerOptions _jsonOptions;
+        // JSON settings
+        private readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
 
         public ServicesApiClient()
         {
-            // Create HTTP client
-            _http = new HttpClient
+            _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(BaseUrl)
-            };
-
-            // JSON settings
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true
+#if ANDROID
+                // Android emulator talks to the host machine
+                BaseAddress = new Uri("http://10.0.2.2:7232/")
+#else
+                // Windows local API
+                BaseAddress = new Uri("http://localhost:7232/")
+#endif
             };
         }
 
-        // Get all services
+        // ✅ Get all services
         public async Task<List<ServiceApiModel>> GetServicesAsync()
         {
-            var response = await _http.GetAsync("api/services");
+            var response = await _httpClient.GetAsync("api/services");
             response.EnsureSuccessStatusCode();
 
             var items = await response.Content.ReadFromJsonAsync<List<ServiceApiModel>>(_jsonOptions);
             return items ?? new List<ServiceApiModel>();
         }
 
-        // Get a single service by ID
+        // ✅ Get one service
         public async Task<ServiceApiModel?> GetServiceAsync(int id)
         {
-            var response = await _http.GetAsync($"api/services/{id}");
+            var response = await _httpClient.GetAsync($"api/services/{id}");
             if (!response.IsSuccessStatusCode)
                 return null;
 
             return await response.Content.ReadFromJsonAsync<ServiceApiModel>(_jsonOptions);
         }
 
-        // Create a new service
+        // ✅ Create service
         public async Task<ServiceApiModel?> CreateServiceAsync(ServiceApiModel model)
         {
             var json = JsonSerializer.Serialize(model, _jsonOptions);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _http.PostAsync("api/services", content);
+            var response = await _httpClient.PostAsync("api/services", content);
             if (!response.IsSuccessStatusCode)
-            {
                 return null;
-            }
 
-            var created = await response.Content.ReadFromJsonAsync<ServiceApiModel>(_jsonOptions);
-            return created;
+            return await response.Content.ReadFromJsonAsync<ServiceApiModel>(_jsonOptions);
         }
 
-        // Update an existing service
+        // ✅ Update service
         public async Task<bool> UpdateServiceAsync(ServiceApiModel model)
         {
             if (model.Id <= 0)
-                throw new ArgumentException("Service Id must be > 0 for update.");
+                throw new ArgumentException("Service Id must be > 0");
 
             var json = JsonSerializer.Serialize(model, _jsonOptions);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _http.PutAsync($"api/services/{model.Id}", content);
-
+            var response = await _httpClient.PutAsync($"api/services/{model.Id}", content);
             return response.IsSuccessStatusCode;
         }
 
-        // Delete a service
+        // ✅ Delete service
         public async Task<bool> DeleteServiceAsync(int id)
         {
-            var response = await _http.DeleteAsync($"api/services/{id}");
+            var response = await _httpClient.DeleteAsync($"api/services/{id}");
             return response.IsSuccessStatusCode;
         }
     }

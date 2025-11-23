@@ -36,23 +36,23 @@
             <!-- DETAILS -->
             <Label Text="{Binding Service.Trainer, StringFormat='Trainer: {0}'}"
                    HorizontalTextAlignment="Center"
-                   TextColor="White" />
+                   TextColor="DarkGreen" />
 
             <Label Text="{Binding Service.DayOfWeek, StringFormat='Day: {0}'}"
                    HorizontalTextAlignment="Center"
-                   TextColor="White" />
+                   TextColor="DarkGreen" />
 
             <Label Text="{Binding Service.StartTime, StringFormat='Starts: {0}'}"
                    HorizontalTextAlignment="Center"
-                   TextColor="White" />
+                   TextColor="DarkGreen" />
 
             <Label Text="{Binding Service.DurationMins, StringFormat='Duration: {0} min'}"
                    HorizontalTextAlignment="Center"
-                   TextColor="White" />
+                   TextColor="DarkGreen" />
 
             <Label Text="{Binding Service.Level, StringFormat='Level: {0}'}"
                    HorizontalTextAlignment="Center"
-                   TextColor="White" />
+                   TextColor="DarkGreen" />
 
             <!-- PRICE -->
             <Label Text="{Binding Service.Price, StringFormat='Price: ${0:F2}'}"

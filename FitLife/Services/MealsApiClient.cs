@@ -13,7 +13,12 @@ namespace FitLife.Services
             // Base URL of the API
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:7232/")
+#if ANDROID
+                // Android emulator -> talks to host machine using 10.0.2.2
+                BaseAddress = new Uri("http://10.0.2.2:7232/")  // <-- change port to your HTTP port
+#else
+    BaseAddress = new Uri("http://localhost:7232/") // Windows
+#endif
             };
         }
 

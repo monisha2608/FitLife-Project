@@ -1,129 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="FitLife.Views.WorkoutListPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:FitLife.ViewModels"
-    xmlns:models="clr-namespace:FitLife.Models"
-    x:DataType="vm:WorkoutsViewModel"
-    Title="Workouts"
-    Padding="24">
-
+<ContentPage x:Class="FitLife.Views.WorkoutListPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:FitLife.ViewModels" xmlns:models="clr-namespace:FitLife.Models" 
+             xmlns:helpers="clr-namespace:FitLife.Helpers"
+x:DataType="vm:WorkoutsViewModel" Title="Workouts" Padding="24">
     <ScrollView>
         <VerticalStackLayout Spacing="20">
-
             <!-- Heading -->
-            <Label Text="Workouts"
-                   FontSize="32"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   TextColor="White" />
-
-            <Label Text="All Workouts"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="{StaticResource PrimaryColor}" />
-
+            <Label Text="Workouts" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Label Text="All Workouts" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource PrimaryColor}" />
             <!-- Add Workout button -->
-            <Button x:Name="AddWorkoutButton"
-                    Text="+ Add Workout"
-                    IsVisible="{Binding ShowAdminButton}"
-                    Clicked="OnAddWorkoutClicked"
-                    HorizontalOptions="Center"
-                    BackgroundColor="#4CAF50"
-                    TextColor="White"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    Padding="20,10"
-                    Margin="0,10,0,0" />
-
+            <Button x:Name="AddWorkoutButton" Text="+ Add Workout" IsVisible="{Binding ShowAdminButton}" Clicked="OnAddWorkoutClicked" HorizontalOptions="Center" BackgroundColor="#4CAF50" TextColor="White" FontSize="16" FontAttributes="Bold" CornerRadius="12" Padding="20,10" Margin="0,10,0,0" />
             <!-- Workout list -->
-            <CollectionView ItemsSource="{Binding Workouts}"
-                            SelectionMode="Single"
-                            SelectionChanged="OnWorkoutSelected"
-                            Margin="0,20,0,0">
-
+            <CollectionView ItemsSource="{Binding Workouts}" SelectionMode="Single" SelectionChanged="OnWorkoutSelected" Margin="0,20,0,0">
                 <!-- Spacing between cards -->
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical"
-                                       ItemSpacing="18" />
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="18" />
                 </CollectionView.ItemsLayout>
-
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:WorkoutApiModel">
 
-
-                       
                         <Frame Padding="3"
-       CornerRadius="20"
-       BackgroundColor="#00FFAA"
-       HasShadow="True"
-       HorizontalOptions="FillAndExpand">
+           CornerRadius="20"
+           BackgroundColor="#00FFAA"
+           HasShadow="True"
+           HorizontalOptions="FillAndExpand">
 
-                            <!-- Actual white card -->
                             <Frame Padding="16"
-           CornerRadius="16"
-           BackgroundColor="White"
-           HasShadow="True">
+               CornerRadius="16"
+               BackgroundColor="White"
+               HasShadow="True">
 
                                 <VerticalStackLayout Spacing="6">
 
-                                    <!-- Top row: Title + Calories Badge -->
+                                    <!-- Title + Calories badge -->
                                     <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
 
                                         <!-- Workout title -->
                                         <Label Text="{Binding Title}"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="OrangeRed"
-                       VerticalOptions="Center" />
-
-                                        <!-- Calories badge -->
-                                        <Frame Grid.Column="1"
-                       Padding="10,4"
-                       CornerRadius="20"
-                       BackgroundColor="#111111"
-                       HasShadow="False"
-                       VerticalOptions="Center">
-                                            <Label Text="{Binding Calories, StringFormat='{}{0} cal 🔥'}"
-                           FontSize="12"
+                           FontSize="18"
                            FontAttributes="Bold"
-                           TextColor="Lime" />
+                           TextColor="OrangeRed"
+                           VerticalOptions="Center" />
+
+                                        <!-- Calories Badge -->
+                                        <Frame Grid.Column="1"
+                           Padding="10,4"
+                           CornerRadius="20"
+                           BackgroundColor="#111111"
+                           HasShadow="False"
+                           VerticalOptions="Center">
+                                            <Label Text="{Binding Calories, StringFormat='{}{0} cal 🔥'}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="Lime" />
                                         </Frame>
 
                                     </Grid>
 
+                                    <!-- Small edit button (admin only) -->
+                                    <Button Text="Edit"
+                        BackgroundColor="#333333"
+                        TextColor="White"
+                        FontSize="12"
+                        CornerRadius="8"
+                        Padding="10,4"
+                        HorizontalOptions="End"
+                        IsVisible="{x:Static helpers:AppState.IsAdmin}"
+                        CommandParameter="{Binding}"
+                        Clicked="OnEditWorkoutClicked" />
+
                                     <!-- Description -->
                                     <Label Text="{Binding Description}"
-                   FontSize="14"
-                   TextColor="Black"
-                   FontAttributes="Bold"
-                   LineBreakMode="TailTruncation" />
+                       FontSize="14"
+                       TextColor="Black"
+                       FontAttributes="Bold"
+                       LineBreakMode="TailTruncation" />
 
-                                    <!-- Category + duration -->
+                                    <!-- Category + Duration -->
                                     <HorizontalStackLayout Spacing="10" Margin="0,4,0,0">
                                         <Label Text="{Binding Category}"
-                       FontSize="13"
-                       TextColor="Black"
-                       FontAttributes="Bold"/>
+                           FontSize="13"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
                                         <Label Text="•"
-                       TextColor="Black"
-                       FontAttributes="Bold"/>
+                           TextColor="Black"
+                           FontAttributes="Bold" />
                                         <Label Text="{Binding DurationMins, StringFormat='{}{0} min'}"
-                       FontSize="13"
-                       TextColor="Black"
-                       FontAttributes="Bold"/>
+                           FontSize="13"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
                                     </HorizontalStackLayout>
 
                                     <!-- Level -->
                                     <HorizontalStackLayout Spacing="10">
                                         <Label Text="{Binding Level}"
-                       FontSize="13"
-                       TextColor="Black" 
-                       FontAttributes="Bold"/>
+                           FontSize="13"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
                                     </HorizontalStackLayout>
 
                                 </VerticalStackLayout>
@@ -132,9 +104,9 @@
                         </Frame>
 
                     </DataTemplate>
+
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -21,7 +21,7 @@
                    TextColor="White" />
 
             <!-- Sub heading -->
-            <Label Text="Available Services"
+            <Label Text="Click a Service to know MORE"
                    FontSize="18"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"

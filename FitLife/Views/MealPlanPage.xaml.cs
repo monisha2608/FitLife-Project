@@ -68,5 +68,14 @@ namespace FitLife.Views
             await Shell.Current.GoToAsync(
                 $"mealEdit?mealId={meal.Id}&serviceId={meal.ServiceId}");
         }
+        private async void OnEditMealClicked(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.CommandParameter is MealApiModel meal)
+            {
+                string route = $"mealEdit?mealId={meal.Id}&serviceId={meal.ServiceId}";
+                await Shell.Current.GoToAsync(route);
+            }
+        }
+
     }
 }

@@ -4,6 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:FitLife.ViewModels"
+    xmlns:helpers="clr-namespace:FitLife.Helpers"
+
     xmlns:models="clr-namespace:FitLife.Models"
     x:DataType="vm:MealsViewModel"
     Title="Meals"
@@ -56,77 +58,88 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:MealApiModel">
 
-                       
                         <Frame Padding="3"
-                               CornerRadius="20"
-                               BackgroundColor="#00FFAA"
-                               HasShadow="True"
-                               HorizontalOptions="FillAndExpand">
+           CornerRadius="20"
+           BackgroundColor="#00FFAA"
+           HasShadow="True"
+           HorizontalOptions="FillAndExpand">
 
-                            
+                            <Frame Padding="16"
+               CornerRadius="16"
+               BackgroundColor="White"
+               HasShadow="True">
 
-                                <!-- Actual white card -->
-                                <Frame Padding="16"
-                                       CornerRadius="16"
-                                       BackgroundColor="White"
-                                       HasShadow="True">
+                                <VerticalStackLayout Spacing="8">
 
-                                    <VerticalStackLayout Spacing="8">
+                                    <!-- Top row: title + calories badge -->
+                                    <HorizontalStackLayout Spacing="8"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand">
 
-                                        <!-- Top row: icon, title, calories badge -->
-                                        <HorizontalStackLayout Spacing="8"
-                                                               VerticalOptions="Center"
-                                                               HorizontalOptions="FillAndExpand">
+                                        <!-- Title + Type -->
+                                        <VerticalStackLayout Spacing="2"
+                                         HorizontalOptions="StartAndExpand">
+                                            <Label Text="{Binding Name}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="DarkGoldenrod" />
 
-                                           
+                                            <Label Text="{Binding Type}"
+                               FontSize="13"
+                               TextColor="Gray" />
+                                        </VerticalStackLayout>
 
-                                            <!-- Title + type -->
-                                            <VerticalStackLayout Spacing="2"
-                                                                 HorizontalOptions="StartAndExpand">
-                                                <Label Text="{Binding Name}"
-                                                       FontSize="18"
-                                                       FontAttributes="Bold"
-                                                       TextColor="DarkGoldenrod" />
-                                                <Label Text="{Binding Type}"
-                                                       FontSize="13"
-                                                       TextColor="Gray" />
-                                            </VerticalStackLayout>
+                                        <!-- Calories badge -->
+                                        <Frame Padding="8,4"
+                           CornerRadius="12"
+                           BackgroundColor="#111111"
+                           HasShadow="False"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center">
+                                            <Label Text="{Binding Calories, StringFormat='{}{0} kcal'}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="Lime" />
+                                        </Frame>
 
-                                            <!-- Calories badge -->
-                                            <Frame Padding="8,4"
-                                                   CornerRadius="12"
-                                                   BackgroundColor="#111111"
-                                                   HasShadow="False"
-                                                   HorizontalOptions="End"
-                                                   VerticalOptions="Center">
-                                                <Label Text="{Binding Calories, StringFormat='{}{0} kcal'}"
-                                                       FontSize="12"
-                                                       FontAttributes="Bold"
-                                                       TextColor="Lime" />
-                                            </Frame>
-                                        </HorizontalStackLayout>
+                                    </HorizontalStackLayout>
 
-                                        <!-- Description -->
-                                        <Label Text="{Binding Description}"
-                                               FontSize="14"
-                                               TextColor="Black"
-                                               LineBreakMode="TailTruncation" />
 
-                                        
-                                        <Label Text="{Binding TimeOfDay}"
-                                               FontSize="12"
-                                               TextColor="{StaticResource AccentColor}" />
+                                    <!-- Admin-only Edit button -->
+                                    <Button Text="Edit"
+                        BackgroundColor="#333333"
+                        TextColor="White"
+                        FontSize="12"
+                        CornerRadius="8"
+                        Padding="10,4"
+                        HorizontalOptions="End"
+                        IsVisible="{x:Static helpers:AppState.IsAdmin}"
+                        CommandParameter="{Binding}"
+                        Clicked="OnEditMealClicked" />
+
+
+                                    <!-- Description -->
+                                    <Label Text="{Binding Description}"
+                       FontSize="14"
+                       TextColor="Black"
+                       LineBreakMode="TailTruncation" />
+
+                                    <!-- Time + day -->
+                                    <Label Text="{Binding TimeOfDay}"
+                       FontSize="12"
+                       TextColor="{StaticResource AccentColor}" />
 
                                     <Label Text="{Binding DayOfWeek}"
-       FontSize="12"
-       TextColor="{StaticResource AccentColor}" />
+                       FontSize="12"
+                       TextColor="{StaticResource AccentColor}" />
+
                                 </VerticalStackLayout>
 
-                                </Frame>
                             </Frame>
-                        
+                        </Frame>
 
                     </DataTemplate>
+
                 </CollectionView.ItemTemplate>
             </CollectionView>
 

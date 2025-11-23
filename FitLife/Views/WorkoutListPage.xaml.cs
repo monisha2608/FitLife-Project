@@ -68,6 +68,16 @@ namespace FitLife.Views
 
 
         // helper for async command support
+        private async void OnEditWorkoutClicked(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.CommandParameter is WorkoutApiModel workout)
+            {
+                var route = $"workoutEdit?workoutId={workout.Id}&serviceId={workout.ServiceId}";
+                await Shell.Current.GoToAsync(route);
+            }
+        }
+
 
     }
+
 }

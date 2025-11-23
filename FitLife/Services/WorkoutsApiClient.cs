@@ -8,17 +8,20 @@ namespace FitLife.Services
     {
         private readonly HttpClient _httpClient;
 
-        // Base URL of the API
-        private const string BaseUrl = "https://localhost:7232";
-
         public WorkoutsApiClient()
         {
-            // Create HTTP client
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(BaseUrl)
+#if ANDROID
+                // Android emulator -> talks to host machine
+                BaseAddress = new Uri("http://10.0.2.2:7232/")
+#else
+            
+            BaseAddress = new Uri("http://localhost:7232/")
+#endif
             };
         }
+
 
         // Get workouts, optionally filtered by service
         public async Task<List<WorkoutApiModel>> GetWorkoutsAsync(int? serviceId = null)
