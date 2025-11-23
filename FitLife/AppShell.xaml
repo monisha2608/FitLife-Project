@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="FitLife.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:FitLife.Views"
     Title="FitLife">
 
-    <!--  Shell theme colors (from App.xaml resources) -->
+    <!-- Basic theme colors for the shell -->
     <Shell.Resources>
         <Style TargetType="Shell">
             <Setter Property="Shell.BackgroundColor" Value="{StaticResource SoftBg}" />
@@ -20,31 +20,21 @@
         </Style>
     </Shell.Resources>
 
-    <!--  Main navigation tabs -->
-    <TabBar>
-        <!-- Dashboard -->
-        <ShellContent
-            Title="Dashboard"
-            Route="dashboard"
-            ContentTemplate="{DataTemplate views:DashboardPage}" />
+    <!-- Main tabs shown when the app opens -->
+    <TabBar x:Name="MainTabBar">
 
-        <!-- Workouts -->
+        <!-- Default first tab for services -->
         <ShellContent
-            Title="Workouts"
-            Route="workouts"
-            ContentTemplate="{DataTemplate views:WorkoutListPage}" />
+            Title="Services"
+            Route="services"
+            ContentTemplate="{DataTemplate views:ServicesPage}" />
 
-        <!-- Meals -->
+        <!-- Login screen tab -->
         <ShellContent
-            Title="Meals"
-            Route="meals"
-            ContentTemplate="{DataTemplate views:MealPlanPage}" />
+            Title="Login"
+            Route="login"
+            ContentTemplate="{DataTemplate views:LoginPage}" />
 
-        <!-- Progress -->
-        <ShellContent
-            Title="Progress"
-            Route="progress"
-            ContentTemplate="{DataTemplate views:ProgressChartPage}" />
     </TabBar>
 
 </Shell>

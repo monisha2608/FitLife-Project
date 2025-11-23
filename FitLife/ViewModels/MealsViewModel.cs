@@ -1,44 +1,83 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
+using System.Windows.Input;
 using FitLife.Models;
 using FitLife.Services;
 
 namespace FitLife.ViewModels
 {
-    // ViewModel for the Meals page
+    // ViewModel for meals screen
     public class MealsViewModel : BaseViewModel
     {
-        // Full list of meals (loaded from mock data)
-        public ObservableCollection<Meal> Meals { get; } =
-            new ObservableCollection<Meal>(MockDataService.GetMeals());
+        // API clients
+        private readonly MealsApiClient _mealsApi = new();
+        private readonly ServicesApiClient _servicesApi = new();
 
-        // Filtered meal categories
-        public IEnumerable<Meal> Breakfast => Meals.Where(m => m.Type == "Breakfast");
-        public IEnumerable<Meal> Lunch => Meals.Where(m => m.Type == "Lunch");
-        public IEnumerable<Meal> Dinner => Meals.Where(m => m.Type == "Dinner");
-        public IEnumerable<Meal> Snack => Meals.Where(m => m.Type == "Snack");
+        // List of meals
+        public ObservableCollection<MealApiModel> Meals { get; } = new();
 
-        // Total calories from all meals
-        public int TotalCalories => Meals.Sum(m => m.Calories);
+        // Currently selected service id
+        public int CurrentServiceId { get; private set; }
 
-        // Command for adding a new meal
-        public Command AddMealCmd { get; }
+        // Refresh command
+        public ICommand RefreshCommand { get; }
 
         public MealsViewModel()
         {
-            AddMealCmd = new Command(async () => await AddMeal());
+            Title = "Meals";
+            RefreshCommand = new Command(async () => await LoadMealsForServiceAsync(CurrentServiceId));
         }
 
-        // Prompts user to add a new meal and updates the total calories
-        private async Task AddMeal()
+        // Load meals for specific service, or all if id is 0
+        public async Task LoadMealsForServiceAsync(int serviceId)
         {
-            string name = await Application.Current!.MainPage!.DisplayPromptAsync("Add meal", "Meal name:");
-            if (string.IsNullOrWhiteSpace(name)) return;
+            if (IsBusy) return;
 
-            var m = new Meal { Name = name, Type = "Snack", Calories = 200, Image = "meal1.png" };
-            Meals.Add(m);
+            IsBusy = true;
+            try
+            {
+                CurrentServiceId = serviceId;
+                Meals.Clear();
 
-            OnPropertyChanged(nameof(TotalCalories));
+                List<MealApiModel> items;
+
+                // Get meals based on filter
+                if (serviceId > 0)
+                    items = await _mealsApi.GetMealsForServiceAsync(serviceId);
+                else
+                    items = await _mealsApi.GetMealsAsync();
+
+                // Load services to match service names
+                var services = await _servicesApi.GetServicesAsync();
+
+                foreach (var m in items)
+                {
+                    var serviceName = services
+                        .FirstOrDefault(s => s.Id == m.ServiceId)?.Name ?? string.Empty;
+
+                    // Add meal to list
+                    Meals.Add(new MealApiModel
+                    {
+                        Id = m.Id,
+                        ServiceId = m.ServiceId,
+                        Name = m.Name,
+                        Description = m.Description,
+                        Type = m.Type,
+                        Calories = m.Calories
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Show error if loading fails
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error loading meals",
+                    ex.Message,
+                    "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

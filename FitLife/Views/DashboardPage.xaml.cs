@@ -2,15 +2,27 @@
 
 namespace FitLife.Views
 {
-    // Code-behind for the Dashboard page
     public partial class DashboardPage : ContentPage
     {
+        // ViewModel for this page
+        private readonly DashboardViewModel _viewModel;
+
         public DashboardPage()
         {
             InitializeComponent();
 
-            // Set the ViewModel for data binding
-            BindingContext ??= new DashboardViewModel();
+            // Create and attach the ViewModel
+            _viewModel = new DashboardViewModel();
+            BindingContext = _viewModel;
+        }
+
+        // Runs when the page appears
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Load dashboard data
+            await _viewModel.LoadAsync();
         }
     }
 }

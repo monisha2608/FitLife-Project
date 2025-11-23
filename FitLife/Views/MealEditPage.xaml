@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.MealEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    x:DataType="vm:MealEditViewModel"
+    Title="Meal"
+    Padding="16">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="12">
+
+            <!-- Back button -->
+            <Button Text="Back"
+                    Clicked="OnBackClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource PrimaryColor}"
+                    HorizontalOptions="Start" />
+
+            <!-- Page title -->
+            <Label Text="Meal Details"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryColor}" />
+
+            <!-- Service selection -->
+            <Label Text="Service" />
+            <Picker ItemsSource="{Binding Services}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedService}" />
+
+            <!-- Meal name -->
+            <Label Text="Name" />
+            <Entry Text="{Binding Name}" />
+
+            <!-- Meal type -->
+            <Label Text="Type (Breakfast / Lunch / ...)" />
+            <Entry Text="{Binding Type}" />
+
+            <!-- Calories input -->
+            <Label Text="Calories" />
+            <Entry Text="{Binding Calories}"
+                   Keyboard="Numeric" />
+
+            <!-- Description box -->
+            <Label Text="Description" />
+            <Editor Text="{Binding Description}"
+                    AutoSize="TextChanges"
+                    HeightRequest="80" />
+
+            <!-- Day of week -->
+            <Label Text="Day of Week" />
+            <Entry Text="{Binding DayOfWeek}" />
+
+            <!-- Time of day -->
+            <Label Text="Time of Day" />
+            <Entry Text="{Binding TimeOfDay}" />
+
+            <!-- Save button -->
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    TextColor="White"
+                    CornerRadius="20"
+                    Margin="0,12,0,0" />
+
+            <!-- Delete button -->
+            <Button Text="Delete"
+                    Command="{Binding DeleteCommand}"
+                    IsVisible="{Binding MealId, Converter={StaticResource NonZeroToBoolConverter}}"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    CornerRadius="20" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

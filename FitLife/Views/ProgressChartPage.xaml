@@ -11,98 +11,92 @@
 
     <VerticalStackLayout Spacing="16">
 
-        <!-- Page heading -->
+        <!-- Page title -->
         <Label Text="Weekly Activity"
                FontSize="28"
                FontAttributes="Bold"
                TextColor="{StaticResource PrimaryColor}"
-               Margin="0,0,0,6"
                HorizontalOptions="Center" />
 
-        <!-- Summary section -->
+        <!-- Progress summary -->
         <Frame Style="{StaticResource Card}">
-            <VerticalStackLayout Spacing="6">
-                <!-- Title -->
-                <Label Text="Weekly Minutes vs Goal"
-               FontSize="16"
-               FontAttributes="Bold"
-               TextColor="{StaticResource TextDark}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
 
-                <!-- Progress bar -->
-                <ProgressBar Progress="{Binding ProgressRatio}"
-                     HeightRequest="12"
-                     ProgressColor="{StaticResource AccentColor}" />
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Weekly Minutes vs Goal"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" />
 
-                <!-- Numbers moved below bar -->
-                <HorizontalStackLayout Spacing="12"
-                               HorizontalOptions="Center">
+                    <ProgressBar Progress="{Binding ProgressRatio}"
+                                 HeightRequest="12"
+                                 ProgressColor="{StaticResource AccentColor}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center">
                     <Label Text="{Binding MinutesSum, StringFormat='Done: {0} min'}"
-                   FontSize="14"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource TextDark}" />
-                    <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"
-                   FontSize="14"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource TextDark}" />
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-        </Frame>
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" />
 
+                    <Label Text="{Binding WeeklyGoalMinutes, StringFormat='Goal: {0} min'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" />
+                </VerticalStackLayout>
+
+            </Grid>
+        </Frame>
 
         <!-- Weekly bar chart -->
         <Frame Style="{StaticResource Card}">
             <CollectionView
                 ItemsSource="{Binding Weekly}"
                 SelectionMode="None"
-                HeightRequest="240"
-                HorizontalOptions="FillAndExpand"
-                HorizontalScrollBarVisibility="Never">
+                HeightRequest="240">
 
-                <!-- 7 columns for 7 days -->
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
-                                     Span="7"
-                                     HorizontalItemSpacing="24"
-                                     VerticalItemSpacing="0" />
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="24" />
                 </CollectionView.ItemsLayout>
 
-                <!-- Daily bars -->
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:ProgressEntry">
+                    <DataTemplate x:DataType="models:ProgressDay">
                         <VerticalStackLayout
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="End"
+                            HorizontalOptions="Center"
                             Spacing="8"
-                            Padding="4,0">
+                            Padding="4">
 
-                            <!-- Bar height represents minutes -->
                             <Grid HeightRequest="180"
                                   HorizontalOptions="FillAndExpand"
                                   VerticalOptions="End">
+
                                 <BoxView Color="{StaticResource AccentColor}"
-                                         WidthRequest="28"
+                                         WidthRequest="22"
                                          HorizontalOptions="Center"
                                          VerticalOptions="End"
                                          HeightRequest="{Binding Minutes}"
-                                         CornerRadius="8" />
+                                         CornerRadius="6" />
                             </Grid>
 
-                            <!-- Day label -->
                             <Label Text="{Binding Day}"
                                    FontSize="14"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextDark}"
                                    HorizontalOptions="Center" />
 
-                            <!-- Minutes label -->
                             <Label Text="{Binding Minutes, StringFormat='{}{0} min'}"
                                    FontSize="13"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextLight}"
                                    HorizontalOptions="Center" />
+
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+
             </CollectionView>
         </Frame>
 

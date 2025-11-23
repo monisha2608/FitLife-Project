@@ -1,4 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using FitLife.Services;
+using FitLife.ViewModels;
+using FitLife.Views;
+
 
 namespace FitLife
 {
@@ -18,6 +22,14 @@ namespace FitLife
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            // Dependency Injection registrations
+            builder.Services.AddSingleton<DatabaseService>();
+
+            // ViewModels
+            builder.Services.AddTransient<ServiceListViewModel>();
+
+            // Views
+            builder.Services.AddTransient<ServicesPage>();
 
             return builder.Build();
         }

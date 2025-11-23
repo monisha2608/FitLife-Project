@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.WorkoutEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    xmlns:models="clr-namespace:FitLife.Models"
+    x:DataType="vm:WorkoutEditViewModel"
+    Title="Workout"
+    Padding="16">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="12">
+
+            <!-- page title -->
+            <Label Text="{Binding PageTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryColor}" />
+
+            <!-- service selector -->
+            <Label Text="Service" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding Services}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedService}" />
+
+            <!-- workout title -->
+            <Label Text="Title" FontAttributes="Bold" />
+            <Entry Text="{Binding Title}" Placeholder="Workout title" />
+
+            <!-- workout description -->
+            <Label Text="Description" FontAttributes="Bold" />
+            <Editor Text="{Binding Description}" AutoSize="TextChanges" />
+
+            <!-- workout category -->
+            <Label Text="Category" FontAttributes="Bold" />
+            <Entry Text="{Binding Category}" Placeholder="e.g. Strength, Yoga" />
+
+            <!-- duration and calories -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Duration (min)" FontAttributes="Bold" />
+                    <Entry Text="{Binding DurationMins}" Keyboard="Numeric" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Calories" FontAttributes="Bold" />
+                    <Entry Text="{Binding Calories}" Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- workout level -->
+            <Label Text="Level" FontAttributes="Bold" />
+            <Entry Text="{Binding Level}" Placeholder="Beginner / Intermediate / Advanced" />
+
+            <!-- action buttons -->
+            <HorizontalStackLayout Spacing="12" Margin="0,16,0,0">
+                <Button Text="Save"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+
+                <Button Text="Delete"
+                        Command="{Binding DeleteCommand}"
+                        IsVisible="{Binding CanDelete}"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

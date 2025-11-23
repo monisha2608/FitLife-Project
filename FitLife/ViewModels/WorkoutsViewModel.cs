@@ -1,40 +1,90 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using FitLife.Helpers;
 using FitLife.Models;
 using FitLife.Services;
 
 namespace FitLife.ViewModels
 {
-    // ViewModel for the workouts screen
+    // ViewModel for workouts list screen
     public class WorkoutsViewModel : BaseViewModel
     {
-        // List of workouts (loaded from mock data)
-        public ObservableCollection<Workout> Workouts { get; } =
-            new ObservableCollection<Workout>(MockDataService.GetWorkouts());
+        // API client for workouts
+        private readonly WorkoutsApiClient _apiClient = new();
 
-        // Command for adding a new workout
-        public Command AddWorkoutCmd { get; }
+        // List of workouts
+        public ObservableCollection<WorkoutApiModel> Workouts { get; } = new();
+
+        // Controls admin button visibility
+        private bool _showAdminButton;
+        public bool ShowAdminButton
+        {
+            get => _showAdminButton;
+            set => Set(ref _showAdminButton, value);
+        }
+
+        // Selected service id
+        private int _serviceId;
+        public int ServiceId
+        {
+            get => _serviceId;
+            set => Set(ref _serviceId, value);
+        }
+
+        // Commands
+        public ICommand LoadWorkoutsCommand { get; }
+        public ICommand AddWorkoutCommand { get; }
 
         public WorkoutsViewModel()
         {
-            AddWorkoutCmd = new Command(async () => await AddWorkout());
+            Title = "Workouts";
+
+            LoadWorkoutsCommand = new Command(async () =>
+                await LoadWorkoutsForServiceAsync(ServiceId));
+
+            AddWorkoutCommand = new Command(async () =>
+                await GoToAddWorkoutAsync(), () => AppState.IsAdmin);
         }
 
-        // Adds a new custom workout through a prompt
-        private async Task AddWorkout()
+        // Load workouts for selected service
+        public async Task LoadWorkoutsForServiceAsync(int serviceId)
         {
-            string title = await Application.Current!.MainPage!.DisplayPromptAsync("Add workout", "Workout title:");
-            if (string.IsNullOrWhiteSpace(title)) return;
+            if (IsBusy) return;
 
-            var w = new Workout
+            IsBusy = true;
+            try
             {
-                Title = title,
-                Category = "Custom",
-                DurationMins = 20,
-                Calories = 150,
-                Image = "workout1.png"
-            };
+                Workouts.Clear();
 
-            Workouts.Add(w);
+                var items = await _apiClient.GetWorkoutsAsync();
+
+                // Filter workouts by registered service
+                if (AppState.RegisteredServiceId != null)
+                {
+                    int sid = AppState.RegisteredServiceId.Value;
+                    items = items.Where(w => w.ServiceId == sid).ToList();
+                }
+
+                foreach (var w in items)
+                    Workouts.Add(w);
+
+                // Update admin button visibility
+                ShowAdminButton = AppState.IsAdmin;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        // Navigate to add workout page
+        private async Task GoToAddWorkoutAsync()
+        {
+            if (!AppState.IsAdmin)
+                return;
+
+            await Shell.Current.GoToAsync(
+                $"workoutEdit?workoutId=0&serviceId={ServiceId}");
         }
     }
 }

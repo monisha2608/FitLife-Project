@@ -2,15 +2,21 @@
 
 namespace FitLife.Views
 {
-    // Code-behind for the Progress Chart page
     public partial class ProgressChartPage : ContentPage
     {
+        private readonly ProgressViewModel _viewModel;
+
         public ProgressChartPage()
         {
-            InitializeComponent();
+            InitializeComponent(); // load XAML
+            _viewModel = new ProgressViewModel(); // create view model
+            BindingContext = _viewModel; // bind data
+        }
 
-            // Set the ViewModel for data binding
-            BindingContext = new ProgressViewModel();
+        protected override void OnAppearing()
+        {
+            base.OnAppearing(); // call base method
+            _viewModel.LoadProgressCommand.Execute(null); // load progress data
         }
     }
 }

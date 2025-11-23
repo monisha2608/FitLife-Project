@@ -6,146 +6,79 @@
     xmlns:vm="clr-namespace:FitLife.ViewModels"
     xmlns:models="clr-namespace:FitLife.Models"
     x:DataType="vm:MealsViewModel"
-    Title="Meal Plan"
+    Title="Meals"
     Padding="16">
 
-    <ContentPage.Resources>
-        <!-- Header text style -->
-        <Style x:Key="MealHeader" TargetType="Label" BasedOn="{StaticResource H2}">
-            <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
-            <Setter Property="Margin" Value="0,10,0,4" />
-            <Setter Property="FontAttributes" Value="Bold" />
-        </Style>
+    <VerticalStackLayout Spacing="16">
 
-        <!-- Meal card row style -->
-        <Style x:Key="MealRowCard" TargetType="Frame" BasedOn="{StaticResource Card}">
-            <Setter Property="Padding" Value="12" />
-            <Setter Property="Margin" Value="0,6,0,0" />
-        </Style>
-    </ContentPage.Resources>
+        <!-- Page title -->
+        <Label Text="Meal Plans"
+               FontSize="28"
+               FontAttributes="Bold"
+               TextColor="{StaticResource PrimaryColor}"
+               HorizontalOptions="Center" />
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="14">
+        <!-- Add button (admin only) -->
+        <Button x:Name="AddMealButton"
+                Text="Add Meal"
+                Clicked="OnAddMealClicked"
+                HorizontalOptions="End"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                TextColor="White"
+                CornerRadius="20"
+                Margin="0,0,0,4" />
 
-            <!-- Summary card -->
-            <Border
-    StrokeThickness="0"
-    Stroke="Transparent"
-    Background="{StaticResource SoftBg}"
-    Margin="0,8"
-    Padding="0"
-    StrokeShape="RoundRectangle 12">
-                <!-- Rounded edges -->
+        <!-- Meals list -->
+        <CollectionView
+            ItemsSource="{Binding Meals}"
+            SelectionMode="Single"
+            SelectionChanged="OnMealSelected">
 
-                <Grid Padding="12" ColumnDefinitions="*,Auto">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Total Calories Today" Style="{StaticResource Caption}" FontAttributes="Bold" />
-                        <Label Text="{Binding TotalCalories}"
-                   FontSize="22"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource PrimaryColor}" />
-                    </VerticalStackLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MealApiModel">
+                    <Frame Padding="12"
+                           Margin="0,0,0,10"
+                           HasShadow="True"
+                           CornerRadius="12"
+                           BackgroundColor="{StaticResource CardBg}">
 
-                    <Button Grid.Column="1" Text="Edit Plan" Style="{StaticResource OutlineButton}" />
-                </Grid>
-            </Border>
+                        <VerticalStackLayout Spacing="4">
 
+                            <!-- Meal title -->
+                            <Label Text="{Binding Title}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextDark}" />
 
-            <!-- ===== Breakfast ===== -->
-            <Label Text="Breakfast" Style="{StaticResource MealHeader}" />
-            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.6" />
-            <CollectionView ItemsSource="{Binding Breakfast}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Meal">
-                        <Frame Style="{StaticResource MealRowCard}">
-                            <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
-                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
-                                    <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2"
-                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                                       Style="{StaticResource Caption}"
-                                       VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            <!-- Meal description -->
+                            <Label Text="{Binding Description}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextLight}"
+                                   LineBreakMode="TailTruncation" />
 
-            <!-- ===== Lunch ===== -->
-            <Label Text="Lunch" Style="{StaticResource MealHeader}" />
-            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.6" />
-            <CollectionView ItemsSource="{Binding Lunch}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Meal">
-                        <Frame Style="{StaticResource MealRowCard}">
-                            <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
-                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
-                                    <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2"
-                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                                       Style="{StaticResource Caption}"
-                                       VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            <!-- Meal details -->
+                            <HorizontalStackLayout Spacing="10" Margin="0,4,0,0">
+                                <Label Text="{Binding MealType}"
+                                       FontSize="13"
+                                       TextColor="{StaticResource TextLight}" />
+                                <Label Text="•"
+                                       FontSize="13"
+                                       TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Calories, StringFormat='{}{0} kcal'}"
+                                       FontSize="13"
+                                       TextColor="{StaticResource TextLight}" />
+                            </HorizontalStackLayout>
 
-            <!-- ===== Dinner ===== -->
-            <Label Text="Dinner" Style="{StaticResource MealHeader}" />
-            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.6" />
-            <CollectionView ItemsSource="{Binding Dinner}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Meal">
-                        <Frame Style="{StaticResource MealRowCard}">
-                            <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
-                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
-                                    <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2"
-                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                                       Style="{StaticResource Caption}"
-                                       VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            <!-- Service name -->
+                            <Label Text="{Binding ServiceName}"
+                                   FontSize="12"
+                                   TextColor="{StaticResource AccentColor}" />
 
-            <!-- ===== Snack ===== -->
-            <Label Text="Snack" Style="{StaticResource MealHeader}" />
-            <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" Opacity="0.6" />
-            <CollectionView ItemsSource="{Binding Snack}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Meal">
-                        <Frame Style="{StaticResource MealRowCard}">
-                            <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
-                                <Image Source="{Binding Image}" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
-                                    <Label Text="{Binding Notes}" Style="{StaticResource Body}" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2"
-                                       Text="{Binding Calories, StringFormat='{}{0} cal'}"
-                                       Style="{StaticResource Caption}"
-                                       VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-            <!-- Add new meal button -->
-            <Button Text="Add Meal" Command="{Binding AddMealCmd}" Style="{StaticResource PrimaryButton}" />
-
-        </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>

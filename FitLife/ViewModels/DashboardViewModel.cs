@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
+﻿using System.Collections.ObjectModel;
+using FitLife.Helpers;
 using FitLife.Models;
 using FitLife.Services;
 
@@ -10,9 +8,13 @@ namespace FitLife.ViewModels
     // ViewModel for the dashboard screen
     public class DashboardViewModel : BaseViewModel
     {
-        // Workouts to display on the dashboard (e.g., today’s list)
-        public ObservableCollection<Workout> TodayWorkouts { get; }
+        // API client for workouts
+        private readonly WorkoutsApiClient _workoutsApi = new();
 
+        // List of today's workouts
+        public ObservableCollection<WorkoutApiModel> TodayWorkouts { get; } = new();
+
+        // Total calories burned today
         private int _caloriesToday;
         public int CaloriesToday
         {
@@ -20,6 +22,7 @@ namespace FitLife.ViewModels
             set => Set(ref _caloriesToday, value);
         }
 
+        // Total workout minutes for the week
         private int _minutesThisWeek;
         public int MinutesThisWeek
         {
@@ -27,24 +30,68 @@ namespace FitLife.ViewModels
             set => Set(ref _minutesThisWeek, value);
         }
 
-        // Commands for navigation (linked with buttons in XAML)
-        public ICommand GoToWorkoutsCommand { get; }
-        public ICommand GoToMealsCommand { get; }
-        public ICommand GoToProgressCommand { get; }
+        // Navigation commands
+        public Command GoToWorkoutsCommand { get; }
+        public Command GoToProgressCommand { get; }
 
         public DashboardViewModel()
         {
-            // Load sample data
-            TodayWorkouts = new ObservableCollection<Workout>(MockDataService.GetWorkouts().Take(3));
-
-            // Calculate totals
-            CaloriesToday = TodayWorkouts.Sum(w => w.Calories);
-            MinutesThisWeek = MockDataService.GetWeeklyProgress().Sum(p => (int)p.Minutes);
-
-            // Page navigation commands
+            // Navigate to workouts page
             GoToWorkoutsCommand = new Command(async () => await Shell.Current.GoToAsync("//workouts"));
-            GoToMealsCommand = new Command(async () => await Shell.Current.GoToAsync("//meals"));
+
+            // Navigate to progress page
             GoToProgressCommand = new Command(async () => await Shell.Current.GoToAsync("//progress"));
+        }
+
+        // Load dashboard data
+        public async Task LoadAsync()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                // Clear old data
+                TodayWorkouts.Clear();
+                CaloriesToday = 0;
+                MinutesThisWeek = 0;
+
+                // Check if user registered for a service
+                if (!AppState.IsRegisteredForService || !AppState.RegisteredServiceId.HasValue)
+                    return;
+
+                int serviceId = AppState.RegisteredServiceId.Value;
+
+                // Get workouts from API
+                var allWorkouts = await _workoutsApi.GetWorkoutsAsync();
+
+                // Filter workouts by service
+                var serviceWorkouts = allWorkouts
+                    .Where(w => w.ServiceId == serviceId)
+                    .ToList();
+
+                // Show only top 3 workouts
+                foreach (var w in serviceWorkouts.Take(3))
+                    TodayWorkouts.Add(w);
+
+                // Calculate totals
+                MinutesThisWeek = serviceWorkouts.Sum(w => w.DurationMins);
+                CaloriesToday = serviceWorkouts.Sum(w => w.Calories);
+            }
+            catch (Exception ex)
+            {
+                // Show error message
+                var page = Application.Current.MainPage;
+                if (page != null)
+                    await page.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                // Reset loading state
+                IsBusy = false;
+            }
         }
     }
 }

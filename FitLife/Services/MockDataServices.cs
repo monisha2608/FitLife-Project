@@ -18,26 +18,11 @@ namespace FitLife.Services
 
         // Returns a list of sample meals to populate the meals screen.
         // Useful for showing how meal cards look with names, types, calories, and images.
-        public static List<Meal> GetMeals() => new()
-        {
-            new Meal { Name="Oats & Berries", Type="Breakfast", Calories=320, Image="meal1.png" },
-            new Meal { Name="Chicken Salad",  Type="Lunch",     Calories=450, Image="meal2.png" },
-            new Meal { Name="Grilled Salmon", Type="Dinner",    Calories=520, Image="meal3.png" },
-            new Meal { Name="Greek Yogurt",   Type="Snack",     Calories=180, Image="meal4.png" }
-        };
+       
 
         // Returns example weekly progress data.
         // Each entry represents total workout minutes logged for that day.
         // This data is typically used for charts or progress bars in the dashboard.
-        public static List<ProgressEntry> GetWeeklyProgress() => new()
-        {
-            new ProgressEntry { Day="Mon", Minutes=20 },
-            new ProgressEntry { Day="Tue", Minutes=35 },
-            new ProgressEntry { Day="Wed", Minutes=0  },
-            new ProgressEntry { Day="Thu", Minutes=25 },
-            new ProgressEntry { Day="Fri", Minutes=40 },
-            new ProgressEntry { Day="Sat", Minutes=15 },
-            new ProgressEntry { Day="Sun", Minutes=30 }
-        };
+        
     }
 }

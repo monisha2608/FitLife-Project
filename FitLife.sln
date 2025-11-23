@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitLife", "FitLife\FitLife.csproj", "{428CF94C-3075-46A8-A3E3-8236DDC06E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitLife.Api", "FitLife.Api\FitLife.Api.csproj", "{EEB30502-B56D-4871-83BE-2C374244334E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{428CF94C-3075-46A8-A3E3-8236DDC06E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{428CF94C-3075-46A8-A3E3-8236DDC06E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{428CF94C-3075-46A8-A3E3-8236DDC06E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB30502-B56D-4871-83BE-2C374244334E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB30502-B56D-4871-83BE-2C374244334E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB30502-B56D-4871-83BE-2C374244334E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB30502-B56D-4871-83BE-2C374244334E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

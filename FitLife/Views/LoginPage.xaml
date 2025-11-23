@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    x:DataType="vm:LoginViewModel"
+    Title="Login"
+    Padding="24">
+
+    <VerticalStackLayout Spacing="16" VerticalOptions="Center">
+
+        <!-- Page title -->
+        <Label Text="FitLife Login"
+               FontSize="28"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Username input -->
+        <Entry Placeholder="Username"
+               Text="{Binding Username}" />
+
+        <!-- Password input -->
+        <Entry Placeholder="Password"
+               IsPassword="True"
+               Text="{Binding Password}" />
+
+        <!-- Login button -->
+        <Button Text="Login"
+                Command="{Binding LoginCommand}"
+                BackgroundColor="#2F80ED"
+                TextColor="White" />
+
+        <!-- Small hint text -->
+        <Label Text="Hint: admin / admin123 for admin access"
+               FontSize="12"
+               TextColor="#6B7280"
+               HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+</ContentPage>

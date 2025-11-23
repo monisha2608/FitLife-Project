@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FitLife.Views.ServiceEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FitLife.ViewModels"
+    x:DataType="vm:ServiceEditViewModel"
+    Title="{Binding Title}"
+    Padding="16">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="12">
+
+            <!-- page heading -->
+            <Label Text="Service Details"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- service name -->
+            <Entry Placeholder="Name"
+                   Text="{Binding Name}" />
+
+            <!-- service type -->
+            <Entry Placeholder="Type (Yoga, HIIT, etc.)"
+                   Text="{Binding Type}" />
+
+            <!-- service description -->
+            <Editor Placeholder="Description"
+                    AutoSize="TextChanges"
+                    Text="{Binding Description}" />
+
+            <!-- trainer name -->
+            <Entry Placeholder="Trainer"
+                   Text="{Binding Trainer}" />
+
+            <!-- select day of week -->
+            <Picker Title="Day of Week"
+                    SelectedItem="{Binding DayOfWeek}">
+                <Picker.Items>
+                    <x:String>Monday</x:String>
+                    <x:String>Tuesday</x:String>
+                    <x:String>Wednesday</x:String>
+                    <x:String>Thursday</x:String>
+                    <x:String>Friday</x:String>
+                    <x:String>Saturday</x:String>
+                    <x:String>Sunday</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- service start time -->
+            <Entry Placeholder="Start Time (e.g. 07:00 AM)"
+                   Text="{Binding StartTime}" />
+
+            <!-- duration in minutes -->
+            <Entry Placeholder="Duration (minutes)"
+                   Keyboard="Numeric"
+                   Text="{Binding DurationMins}" />
+
+            <!-- service price -->
+            <Entry Placeholder="Price"
+                   Keyboard="Numeric"
+                   Text="{Binding Price}" />
+
+            <!-- difficulty level -->
+            <Entry Placeholder="Level (Beginner, All Levels, etc.)"
+                   Text="{Binding Level}" />
+
+            <!-- loading indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               HorizontalOptions="Center" />
+
+            <!-- save button -->
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="#2F80ED"
+                    TextColor="White" />
+
+            <!-- delete button -->
+            <Button Text="Delete"
+                    Command="{Binding DeleteCommand}"
+                    TextColor="Red" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
